@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "468911259845",
+    "project_id": "tga-covid-19",
+    "storage_bucket": "tga-covid-19.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:468911259845:android:73ef97bc519ac384bdf0ac",
+        "android_client_info": {
+          "package_name": "com.example.menu_login"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "468911259845-fogb42e2vlmb6ttfqp292evro4ho5jgf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDi3HrOmiXaKwpS-hMVhXs5n2R9pl9dzh4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "468911259845-fogb42e2vlmb6ttfqp292evro4ho5jgf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
