@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:menu_login/login_page.dart';
+import 'package:menu_login/page/page_login.dart';
 import 'package:menu_login/page/page_dashboard.dart';
 
 import 'package:menu_login/page/page_formInput.dart';
@@ -35,7 +35,7 @@ class TemplateInstansi extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return LoginPage();
+                      return PageLogin();
                     },
                   ),
                 );
@@ -44,7 +44,7 @@ class TemplateInstansi extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return LoginPage();
+                      return PageLogin();
                     },
                   ),
                 );

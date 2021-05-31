@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:menu_login/page/page_dashboard.dart';
 
-import 'package:menu_login/login_page.dart';
+import 'package:menu_login/page/page_login.dart';
 
 class Template extends StatelessWidget {
   final Widget body;
@@ -13,7 +13,7 @@ class Template extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.blue[900],
+        backgroundColor: Colors.indigoAccent,
         title: Text("Statistics",
             style: TextStyle(
                 color: Colors.white,
@@ -31,7 +31,7 @@ class Template extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return LoginPage();
+                      return PageLogin();
                     },
                   ),
                 );
@@ -40,7 +40,7 @@ class Template extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return LoginPage();
+                      return PageLogin();
                     },
                   ),
                 );

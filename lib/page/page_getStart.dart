@@ -6,7 +6,7 @@ class GetStart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blueAccent,
+      backgroundColor: Colors.indigoAccent,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -54,7 +54,7 @@ class GetStart extends StatelessWidget {
                 "Get Start",
                 style: TextStyle(
                     fontSize: 20,
-                    color: Colors.blueAccent,
+                    color: Colors.indigoAccent,
                     fontWeight: FontWeight.bold),
               ),
               height: 50,

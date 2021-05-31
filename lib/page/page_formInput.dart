@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:menu_login/model/Input_data.dart';
 
 class PageFormInput extends StatelessWidget {
+  int currentbulan;
   TextEditingController nama = TextEditingController();
   TextEditingController kecamatan = TextEditingController();
   TextEditingController alamat = TextEditingController();
@@ -41,23 +44,51 @@ class PageFormInput extends StatelessWidget {
               controlerinputdata: alamat,
             ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Expanded(
-                    child: InputData(
-                  nama: "Umur",
-                  hintText: "Tahun",
-                  controlerinputdata: tahun,
-                )),
+                  child: InputData(
+                    nama: "Umur",
+                    hintText: "Tahun",
+                    controlerinputdata: jeniskelamin,
+                  ),
+                ),
                 SizedBox(
                   width: 15,
                 ),
                 Expanded(
-                    child: InputData(
-                  nama: "",
-                  hintText: "Bulan",
-                  controlerinputdata: bulan,
-                )),
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    height: 53,
+                    padding: EdgeInsets.only(left: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey, width: 1),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: DropdownSearch<int>(
+                      dropdownSearchDecoration: InputDecoration(
+                        border: InputBorder.none,
+                        isDense: true,
+                        contentPadding: EdgeInsets.zero,
+                      ),
+                      items: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
+
+                      hint: "Bulan",
+                      maxHeight: 300,
+                      showClearButton: false,
+                      clearButtonBuilder: (context) => Icon(Icons.cancel),
+                      // label: "Search",
+                      onChanged: (value) {
+                        currentbulan = value;
+                      },
+                      showSearchBox: false,
+                    ),
+                  ),
+                ),
               ],
+            ),
+            SizedBox(
+              height: 10,
             ),
             InputData(
               nama: "Jenis Kelamin",
@@ -174,43 +205,6 @@ class PageFormInput extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class InputData extends StatelessWidget {
-  final String nama;
-  final String hintText;
-  final TextEditingController controlerinputdata;
-
-  const InputData({
-    @required this.nama,
-    @required this.hintText,
-    @required this.controlerinputdata,
-  });
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          nama,
-          style: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        TextField(
-          controller: controlerinputdata,
-          decoration: InputDecoration(
-            hintText: hintText,
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-      ],
     );
   }
 }

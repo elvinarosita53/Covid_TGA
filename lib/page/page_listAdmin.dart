@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:menu_login/model/list_covid.dart';
-import 'package:menu_login/login_page.dart';
+import 'package:menu_login/page/page_login.dart';
 import 'package:menu_login/template/template_admin.dart';
 
 List namaPasien = [

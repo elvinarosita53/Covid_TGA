@@ -1,10 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:menu_login/build_buttonShow.dart';
+import 'package:menu_login/model/build_buttonShow.dart';
 import 'package:menu_login/model/constant.dart';
 import 'package:menu_login/template/template.dart';
-import 'package:menu_login/widgets.dart';
+import 'package:menu_login/model/widgets.dart';
 
 // //searchBox
 // searchBox(context),

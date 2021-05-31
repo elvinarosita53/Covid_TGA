@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:menu_login/login_page.dart';
+import 'package:menu_login/page/page_login.dart';
 import 'package:menu_login/page/page_dashboard.dart';
 import 'package:menu_login/page/page_formInput.dart';
 
@@ -42,7 +42,7 @@ class TemplateAdmin extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return LoginPage();
+                      return PageLogin();
                     },
                   ),
                 );
@@ -51,7 +51,7 @@ class TemplateAdmin extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return LoginPage();
+                      return PageLogin();
                     },
                   ),
                 );
