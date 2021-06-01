@@ -10,7 +10,7 @@ List namaPasien = [
   "si E",
 ];
 
-class ListInstansi extends StatelessWidget {
+class PageListInstansi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TemplateInstansi(

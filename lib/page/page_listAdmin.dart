@@ -19,7 +19,7 @@ List namaPasien = [
   "si E",
 ];
 
-class ListAdmin extends StatelessWidget {
+class PageListAdmin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TemplateAdmin(

@@ -16,8 +16,8 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     List pageTujuan = (isAdmin)
-        ? [PageAdmin(), ListAdmin()]
-        : [PageInstansi(), ListInstansi()];
+        ? [PageAdmin(), PageListAdmin()]
+        : [PageInstansi(), PageListInstansi()];
 
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(

@@ -1,29 +1,55 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:menu_login/model/Input_data.dart';
 
-class PageFormInput extends StatelessWidget {
+class PageFormInput extends StatefulWidget {
+  @override
+  _PageFormInputState createState() => _PageFormInputState();
+}
+
+class _PageFormInputState extends State<PageFormInput> {
+  String tglberangkat = "Tgl Berangkat";
+  String tglawalgejala = "Tgl Awal Gejala";
+
   int currentbulan;
+
+  String currentjeniskelamin;
+
   TextEditingController nama = TextEditingController();
+
   TextEditingController kecamatan = TextEditingController();
+
   TextEditingController alamat = TextEditingController();
+
   TextEditingController tahun = TextEditingController();
+
   TextEditingController bulan = TextEditingController();
+
   TextEditingController jeniskelamin = TextEditingController();
+
   TextEditingController nohp = TextEditingController();
+
   TextEditingController daerah = TextEditingController();
-  TextEditingController tglberangkat = TextEditingController();
+
   TextEditingController tandaGejala = TextEditingController();
+
   TextEditingController tglAwalGejala = TextEditingController();
+
   TextEditingController kondisiUmum = TextEditingController();
+
   TextEditingController tataLaksana = TextEditingController();
+
   TextEditingController keterangan = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Colors.blue[900], title: Text("Input Data Covid")),
+          backgroundColor: Colors.blue[400], title: Text("Input Data Covid")),
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: ListView(
@@ -90,10 +116,34 @@ class PageFormInput extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            InputData(
-              nama: "Jenis Kelamin",
-              hintText: "Masukkan Jenis Kelamin",
-              controlerinputdata: jeniskelamin,
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.only(bottom: 10),
+                height: 53,
+                padding: EdgeInsets.only(left: 10),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey, width: 1),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: DropdownSearch<String>(
+                  dropdownSearchDecoration: InputDecoration(
+                    border: InputBorder.none,
+                    isDense: true,
+                    contentPadding: EdgeInsets.zero,
+                  ),
+                  items: ["laki-laki", "perempuan"],
+
+                  hint: "Jenis Kelamin",
+                  maxHeight: 120,
+                  showClearButton: false,
+                  clearButtonBuilder: (context) => Icon(Icons.cancel),
+                  // label: "Search",
+                  onChanged: (value) {
+                    currentjeniskelamin = value;
+                  },
+                  showSearchBox: false,
+                ),
+              ),
             ),
             InputData(
               nama: "No.HP",
@@ -112,11 +162,37 @@ class PageFormInput extends StatelessWidget {
                   width: 15,
                 ),
                 Expanded(
-                    child: InputData(
-                  nama: "",
-                  hintText: "Tgl Berangkat",
-                  controlerinputdata: tglberangkat,
-                )),
+                  child: GestureDetector(
+                    child: Container(
+                      margin: EdgeInsets.only(top: 10),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        tglberangkat,
+                        style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                      ),
+                      height: 53,
+                      padding: EdgeInsets.only(left: 10),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey, width: 1),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    onTap: () async {
+                      await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1990),
+                        lastDate: DateTime(2030),
+                      ).then(
+                        (value) {
+                          //ini di ganti jd string dulu valuenya DateFormat.yMd().format(value)
+                          tglberangkat = DateFormat.yMd("id").format(value);
+                        },
+                      );
+                      setState(() {});
+                    },
+                  ),
+                ),
               ],
             ),
             Row(
@@ -131,11 +207,37 @@ class PageFormInput extends StatelessWidget {
                   width: 15,
                 ),
                 Expanded(
-                    child: InputData(
-                  nama: "",
-                  hintText: "Tgl Awal Gejala",
-                  controlerinputdata: tglAwalGejala,
-                )),
+                  child: GestureDetector(
+                    child: Container(
+                      margin: EdgeInsets.only(top: 10),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        tglawalgejala,
+                        style: TextStyle(fontSize: 16, color: Colors.grey[600]),
+                      ),
+                      height: 53,
+                      padding: EdgeInsets.only(left: 10),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey, width: 1),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    onTap: () async {
+                      await showDatePicker(
+                        context: context,
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(1990),
+                        lastDate: DateTime(2030),
+                      ).then(
+                        (value) {
+                          //ini di ganti jd string dulu valuenya DateFormat.yMd().format(value)
+                          tglawalgejala = DateFormat.yMd("id").format(value);
+                        },
+                      );
+                      setState(() {});
+                    },
+                  ),
+                ),
               ],
             ),
             InputData(
@@ -174,7 +276,7 @@ class PageFormInput extends StatelessWidget {
                       'jenis kelamin': jeniskelamin.text,
                       'no. hp': nohp.text,
                       'daerah': daerah.text,
-                      'tgl berangkat': tglberangkat.text,
+                      'tgl berangkat': tglberangkat,
                       'tanda dan gejala': tandaGejala.text,
                       'tgl awal gejala': tandaGejala.text,
                       'kondisi umum': kondisiUmum.text,
@@ -195,7 +297,7 @@ class PageFormInput extends StatelessWidget {
                     ),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: Colors.blue[900],
+                      color: Colors.blue[400],
                       borderRadius: BorderRadius.circular(20),
                     ),
                   ),

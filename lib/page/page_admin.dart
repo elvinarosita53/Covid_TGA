@@ -69,7 +69,7 @@ class _PageAdminState extends State<PageAdmin> {
         padding: EdgeInsets.only(left: 10),
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-            border: Border.all(color: Colors.blue[900], width: 2),
+            border: Border.all(color: Colors.blue[400], width: 2),
             borderRadius: BorderRadius.circular(40)),
         child: DropdownSearch<String>(
           dropdownSearchDecoration: InputDecoration(

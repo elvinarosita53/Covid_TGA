@@ -24,7 +24,7 @@ class TemplateAdmin extends StatelessWidget {
       ),
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.blue[900],
+        backgroundColor: Colors.blue[400],
         title: Text("Admin",
             style: TextStyle(
                 color: Colors.white,

@@ -13,39 +13,39 @@ LinearGradient kwarnagradien_meninggal = LinearGradient(
   begin: Alignment.center,
   end: Alignment.bottomCenter,
   colors: [
-    Colors.red[300],
-    Colors.red[100],
+    Colors.green[100],
+    Colors.teal[100],
   ],
 );
 LinearGradient kwarnagradien_sembuh = LinearGradient(
   begin: Alignment.center,
   end: Alignment.bottomCenter,
   colors: [
-    Colors.blue[300],
-    Colors.blue[100],
+    Colors.lightBlue[200],
+    Colors.indigo[100],
   ],
 );
 LinearGradient kwarnagradien_positif = LinearGradient(
   begin: Alignment.center,
   end: Alignment.bottomCenter,
   colors: [
-    Colors.yellow[300],
-    Colors.yellow[100],
+    Colors.red[200],
+    Colors.deepOrange[100],
   ],
 );
 LinearGradient kwarnagradien_dirawat = LinearGradient(
   begin: Alignment.center,
   end: Alignment.bottomCenter,
   colors: [
-    Colors.green[300],
-    Colors.green[100],
+    Colors.deepOrange[200],
+    Colors.yellow[100],
   ],
 );
 LinearGradient kwarnagradien_tersuspect = LinearGradient(
   begin: Alignment.center,
   end: Alignment.bottomCenter,
   colors: [
-    Colors.greenAccent,
-    Colors.greenAccent[100],
+    Colors.yellow[200],
+    Colors.lime[200],
   ],
 );

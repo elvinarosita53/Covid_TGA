@@ -13,7 +13,7 @@ class Template extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.indigoAccent,
+        backgroundColor: Colors.blue[400],
         title: Text("Statistics",
             style: TextStyle(
                 color: Colors.white,
