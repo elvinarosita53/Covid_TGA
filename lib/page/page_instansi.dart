@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:menu_login/model/list_covid.dart';
-import 'package:menu_login/model/list_keterangan.dart';
+import 'package:menu_login/widget/list_covid.dart';
+import 'package:menu_login/widget/list_keterangan.dart';
 import 'package:menu_login/template/template_instansi.dart';
-import 'package:menu_login/model/widgets.dart';
+import 'package:menu_login/widget/widgets.dart';
 
 class PageInstansi extends StatelessWidget {
   @override

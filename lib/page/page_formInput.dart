@@ -1,10 +1,9 @@
-import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:menu_login/model/Input_data.dart';
+import 'package:menu_login/widget/Input_data.dart';
+import 'package:menu_login/widget/constant.dart';
 
 class PageFormInput extends StatefulWidget {
   @override
@@ -15,7 +14,8 @@ class _PageFormInputState extends State<PageFormInput> {
   String tglberangkat = "Tgl Berangkat";
   String tglawalgejala = "Tgl Awal Gejala";
 
-  int currentbulan;
+  int currentBulan;
+  int currentTahun;
 
   String currentjeniskelamin;
 
@@ -26,8 +26,6 @@ class _PageFormInputState extends State<PageFormInput> {
   TextEditingController alamat = TextEditingController();
 
   TextEditingController tahun = TextEditingController();
-
-  TextEditingController bulan = TextEditingController();
 
   TextEditingController jeniskelamin = TextEditingController();
 
@@ -73,10 +71,31 @@ class _PageFormInputState extends State<PageFormInput> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Expanded(
-                  child: InputData(
-                    nama: "Umur",
-                    hintText: "Tahun",
-                    controlerinputdata: jeniskelamin,
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 10),
+                    height: 53,
+                    padding: EdgeInsets.only(left: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey, width: 1),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: DropdownSearch<int>(
+                      dropdownSearchDecoration: InputDecoration(
+                        border: InputBorder.none,
+                        isDense: true,
+                        contentPadding: EdgeInsets.zero,
+                      ),
+                      items: umurTahun,
+                      hint: "Tahun",
+                      maxHeight: 300,
+                      showClearButton: false,
+
+                      // label: "Search",
+                      onChanged: (value) {
+                        currentTahun = value;
+                      },
+                      showSearchBox: false,
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -97,15 +116,14 @@ class _PageFormInputState extends State<PageFormInput> {
                         isDense: true,
                         contentPadding: EdgeInsets.zero,
                       ),
-                      items: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
-
+                      items: umurBulan,
                       hint: "Bulan",
                       maxHeight: 300,
                       showClearButton: false,
                       clearButtonBuilder: (context) => Icon(Icons.cancel),
                       // label: "Search",
                       onChanged: (value) {
-                        currentbulan = value;
+                        currentBulan = value;
                       },
                       showSearchBox: false,
                     ),
@@ -132,7 +150,6 @@ class _PageFormInputState extends State<PageFormInput> {
                     contentPadding: EdgeInsets.zero,
                   ),
                   items: ["laki-laki", "perempuan"],
-
                   hint: "Jenis Kelamin",
                   maxHeight: 120,
                   showClearButton: false,
@@ -271,9 +288,9 @@ class _PageFormInputState extends State<PageFormInput> {
                       'nama': nama.text,
                       'kecamatan': kecamatan.text,
                       'alamat': alamat.text,
-                      'tahun': tahun.text,
-                      'bulan': bulan.text,
-                      'jenis kelamin': jeniskelamin.text,
+                      'tahun': currentTahun,
+                      'bulan': currentBulan,
+                      'jenis kelamin': currentjeniskelamin,
                       'no. hp': nohp.text,
                       'daerah': daerah.text,
                       'tgl berangkat': tglberangkat,

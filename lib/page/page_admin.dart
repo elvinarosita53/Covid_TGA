@@ -1,9 +1,9 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:menu_login/model/list_covid.dart';
-import 'package:menu_login/model/list_keterangan.dart';
+import 'package:menu_login/widget/list_covid.dart';
+import 'package:menu_login/widget/list_keterangan.dart';
 import 'package:menu_login/template/template_admin.dart';
-import 'package:menu_login/model/widgets.dart';
+import 'package:menu_login/widget/widgets.dart';
 
 class PageAdmin extends StatefulWidget {
   @override

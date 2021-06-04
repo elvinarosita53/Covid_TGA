@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:menu_login/page/page_dashboard.dart';
 
 import 'package:menu_login/page/page_login.dart';
+import 'package:menu_login/widget/constant.dart';
 
 class Template extends StatelessWidget {
   final Widget body;
@@ -11,18 +13,20 @@ class Template extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
-        backgroundColor: Colors.blue[400],
-        title: Text("Statistics",
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 25,
-                fontWeight: FontWeight.bold)),
+        title: Text(
+          "Statistics",
+          style: GoogleFonts.oswald(
+              color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: primarycolor,
+
         actions: [
           PopupMenuButton(
             icon: Icon(
-              Icons.more_vert,
+              Icons.menu,
+              size: 30,
               color: Colors.white,
             ),
             onSelected: (value) {

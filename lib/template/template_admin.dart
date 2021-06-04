@@ -1,27 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:menu_login/page/page_login.dart';
 import 'package:menu_login/page/page_dashboard.dart';
-import 'package:menu_login/page/page_formInput.dart';
 
 class TemplateAdmin extends StatelessWidget {
   final Widget body;
+  final Widget floatingActionButton;
 
-  const TemplateAdmin({this.body});
+  const TemplateAdmin({this.body, this.floatingActionButton});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add_circle),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => PageFormInput(),
-            ),
-          );
-        },
-      ),
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.blue[400],
@@ -86,6 +75,7 @@ class TemplateAdmin extends StatelessWidget {
         // leading: IconButton(icon: men, onPressed: onPressed),
       ),
       body: body,
+      floatingActionButton: floatingActionButton,
     );
   }
 }
