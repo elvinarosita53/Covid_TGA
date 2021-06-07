@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:menu_login/page/page_admin.dart';
-import 'package:menu_login/page/page_instansi.dart';
+import 'package:menu_login/example/page_admin.dart';
+import 'package:menu_login/example/page_instansi.dart';
 import 'package:menu_login/page/page_listAdmin.dart';
-import 'package:menu_login/page/page_listInstansi.dart';
+import 'package:menu_login/example/page_listInstansi.dart';
 
 class MainPage extends StatefulWidget {
   @override

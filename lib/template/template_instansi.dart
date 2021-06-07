@@ -16,7 +16,9 @@ class TemplateInstansi extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => PageFormInput(),
+              builder: (context) => PageFormInput(
+                listID: "",
+              ),
             ),
           );
         },

@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:menu_login/widget/build_buttonShow.dart';
@@ -101,46 +100,39 @@ class _PageDashboardState extends State<PageDashboard> {
   }
 
   Widget buildCarosel() {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 5, right: 5),
-          child: CarouselSlider(
-            items: [
-              Boxgrafik(
-                kasus: "meninggal",
-                total: "23456",
-                kotalKecil: kwarna_meninggal,
-              ),
-              Boxgrafik(
-                kasus: "positif",
-                total: "2444",
-                kotalKecil: kwarna_positif,
-              ),
-              Boxgrafik(
-                kasus: "sembuh",
-                total: "23456",
-                kotalKecil: kwarna_sembuh,
-              ),
-              Boxgrafik(
-                kasus: "dirawat",
-                total: "377",
-                kotalKecil: kwarna_dirawat,
-              ),
-              Boxgrafik(
-                kasus: "tersuspek",
-                total: "222",
-                kotalKecil: kwarna_tersuspect,
-              )
-            ],
-            options: CarouselOptions(
-              autoPlay: true,
-              aspectRatio: 2.0,
-              enlargeCenterPage: true,
-            ),
+    return Container(
+      height: 200,
+      padding: const EdgeInsets.only(left: 5, right: 5),
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: [
+          Boxgrafik(
+            kasus: "meninggal",
+            total: "23456",
+            kotalKecil: kwarna_meninggal,
           ),
-        )
-      ],
+          Boxgrafik(
+            kasus: "positif",
+            total: "2444",
+            kotalKecil: kwarna_positif,
+          ),
+          Boxgrafik(
+            kasus: "sembuh",
+            total: "23456",
+            kotalKecil: kwarna_sembuh,
+          ),
+          Boxgrafik(
+            kasus: "dirawat",
+            total: "377",
+            kotalKecil: kwarna_dirawat,
+          ),
+          Boxgrafik(
+            kasus: "tersuspek",
+            total: "222",
+            kotalKecil: kwarna_tersuspect,
+          )
+        ],
+      ),
     );
   }
 }
@@ -196,7 +188,7 @@ class Boxgrafik extends StatelessWidget {
             ),
           ],
         ),
-        width: MediaQuery.of(context).size.width,
+        width: MediaQuery.of(context).size.width / 2,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(15),
