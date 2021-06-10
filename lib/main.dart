@@ -14,6 +14,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      //untuk setting waktu zona di indonesia
+      //cara lain
+      //initializeDateFormat();
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
       ],

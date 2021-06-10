@@ -103,7 +103,7 @@ class _PageListAdminState extends State<PageListAdmin> {
                   //listview.builder agar jumlah data sama dgn yg di inputkan secara otomatis
                   return ListView.builder(
                     //untuk perulangan jumlah data covid
-                    itemCount: (dataCovid == null) ? 4 : dataCovid.length,
+                    itemCount: dataCovid.length,
                     itemBuilder: (context, index) {
                       if (dataCovid != null) {
                         return Padding(

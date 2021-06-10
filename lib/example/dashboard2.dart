@@ -1,21 +1,13 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:menu_login/widget/build_buttonShow.dart';
+import 'package:menu_login/widget/build_chart.dart';
 import 'package:menu_login/widget/list_keterangan.dart';
-
-import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:menu_login/template/template.dart';
-import 'package:menu_login/widget/widgets.dart';
 
 class Dashboard2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //untuk memformat inisial tanggal sesuai negara
-    initializeDateFormatting();
-    DateTime waktusekarang = DateTime.now();
-    //('id') : code negara yg di tuju
-    String date = DateFormat.yMMMMd('id').format(waktusekarang);
     return Template(
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
@@ -53,7 +45,7 @@ class Dashboard2 extends StatelessWidget {
                 ),
               ),
             ),
-            buildChart(context),
+            BuildChart(),
             Listketerangan(),
             SizedBox(
               height: 30,
