@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:menu_login/widget/boxGrafik.dart';
 import 'package:menu_login/widget/build_chart.dart';
+import 'package:menu_login/widget/build_kesimpulan.dart';
+import 'package:menu_login/widget/cardKesimpulan.dart';
 import 'package:menu_login/widget/constant.dart';
 import 'package:menu_login/template/template.dart';
 import 'package:menu_login/widget/tabelBottomShow.dart';
@@ -57,11 +60,14 @@ class _PageDashboardState extends State<PageDashboard> {
             child: BuildChart(),
           ),
           buildCarosel(),
+          //NOTE untuk botton kesimpulan grafik
+          BuildKesimpulan(),
         ],
       ),
     );
   }
 
+//NOTE untuk bagian search
   Widget searchBox(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -116,6 +122,7 @@ class _PageDashboardState extends State<PageDashboard> {
     );
   }
 
+//NOTE untuk carousel geser datanya
   Widget buildCarosel() {
     return StreamBuilder<QuerySnapshot>(
       stream: backendGrafik.snapshots(),
@@ -180,15 +187,16 @@ class _PageDashboardState extends State<PageDashboard> {
           }
 
           print("jumlah kasus : $kasus");
-
+          //NOTE untuk boxcarousel
           return Container(
-            height: 200,
+            height: 100,
             padding: const EdgeInsets.only(left: 5, right: 5),
+            //box carousel
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
                 Boxgrafik(
-                  kasus: "meninggal",
+                  kasus: "Meninggal",
                   total: kasus['Konfirmasi Meninggal'] +
                       kasus['Suspek Meninggal/Probable'],
                   kotalKecil: kwarna_meninggal,
@@ -214,7 +222,7 @@ class _PageDashboardState extends State<PageDashboard> {
                   },
                 ),
                 Boxgrafik(
-                  kasus: "positif",
+                  kasus: "Positif",
                   total: kasus['Jumlah Kasus Konfirmasi'],
                   kotalKecil: kwarna_positif,
                   onBottonShow: () {
@@ -235,7 +243,7 @@ class _PageDashboardState extends State<PageDashboard> {
                   },
                 ),
                 Boxgrafik(
-                  kasus: "sembuh",
+                  kasus: "Sembuh",
                   total: kasus['Jumlah PDP Sehat'] +
                       kasus['Discarded'] +
                       kasus['Konfirmasi Sembuh'],
@@ -263,7 +271,7 @@ class _PageDashboardState extends State<PageDashboard> {
                   },
                 ),
                 Boxgrafik(
-                  kasus: "dirawat",
+                  kasus: "Dirawat",
                   total: kasus['Konfirmasi Dirawat'],
                   kotalKecil: kwarna_dirawat,
                   onBottonShow: () {
@@ -284,7 +292,7 @@ class _PageDashboardState extends State<PageDashboard> {
                   },
                 ),
                 Boxgrafik(
-                  kasus: "tersuspek",
+                  kasus: "Tersuspek",
                   total: kasus['Jumlah Suspek'] +
                       kasus['Suspek Dirawat'] +
                       kasus['Suspek Isolasi Mandiri'] +
@@ -333,7 +341,11 @@ class _PageDashboardState extends State<PageDashboard> {
             ),
           );
         } else {
-          return Center(child: Text("tidak ada data"));
+          return Center(
+            child: SpinKitFadingFour(
+              size: 30,
+            ),
+          );
         }
       },
     );
