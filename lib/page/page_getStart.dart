@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:menu_login/page/page_dashboard.dart';
+import 'package:menu_login/page/page_panduan.dart';
 import 'package:menu_login/widget/constant.dart';
 
-class GetStart extends StatelessWidget {
+class PageGetStart extends StatelessWidget {
   int spacerAtas = 3;
   int spacerTengah = 4;
   int spacerBawah = 2;
@@ -10,97 +11,112 @@ class GetStart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      body: Stack(
         children: [
-          SizedBox(
+          Container(
+            height: MediaQuery.of(context).size.height / 2,
             width: MediaQuery.of(context).size.width,
-          ),
-          Spacer(
-            flex: spacerAtas,
-          ),
-          Icon(
-            Icons.format_quote,
-            color: primarycolor,
-            size: 80,
-          ),
-          Text(
-            "Bersama Kita Cegah Penyebaran",
-            style: TextStyle(
-                fontSize: 17,
-                fontStyle: FontStyle.italic,
-                color: textPrimaeyColor),
-          ),
-          SizedBox(height: 5),
-
-          Text(
-            "COVID-19",
-            style: TextStyle(
-              fontSize: 60,
-              // fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.w700,
+            decoration: BoxDecoration(
               color: primarycolor,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(70),
+                bottomRight: Radius.circular(70),
+              ),
             ),
           ),
-          SizedBox(
-            height: 50,
-          ),
-          SizedBox(
-            width: 300,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TigaM(
-                  judul: "Memakai Masker",
-                  gambar: Icons.masks_outlined,
-                ),
-                TigaM(
-                  judul: "Mencuci Tangan",
-                  gambar: Icons.wash_outlined,
-                ),
-                TigaM(
-                  judul: "Menjaga Jarak",
-                  gambar: Icons.social_distance_outlined,
-                ),
-              ],
-            ),
-          ),
-
-          Spacer(
-            flex: spacerTengah,
-          ),
-
-          //bagian melihat halaman selanjutnya
-          InkWell(
-            borderRadius: BorderRadius.circular(25),
-            onTap: () {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PageDashboard(),
-                  ));
-            },
-            child: Container(
-              alignment: Alignment.center,
-              child: Text(
-                "Get Start",
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+              ),
+              Spacer(
+                flex: spacerAtas,
+              ),
+              Icon(
+                Icons.format_quote,
+                color: Colors.white,
+                size: 80,
+              ),
+              Text(
+                "Bersama Kita Cegah Penyebaran",
                 style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
+                    fontSize: 17,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.blue[100]),
               ),
-              height: 50,
-              width: 300,
-              decoration: BoxDecoration(
+              SizedBox(height: 20),
+
+              Text(
+                "COVID-19",
+                style: TextStyle(
+                  fontSize: 60,
+                  // fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
+              ),
+              SizedBox(
+                height: 100,
+              ),
+              SizedBox(
+                width: 300,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TigaM(
+                      judul: "Memakai \nMasker",
+                      gambar: Icons.masks_outlined,
+                    ),
+                    TigaM(
+                      judul: "Mencuci \nTangan",
+                      gambar: Icons.wash_outlined,
+                    ),
+                    TigaM(
+                      judul: "Menjaga \nJarak",
+                      gambar: Icons.social_distance_outlined,
+                    ),
+                  ],
+                ),
+              ),
+
+              Spacer(
+                flex: spacerTengah,
+              ),
+
+              //bagian melihat halaman selanjutnya
+              InkWell(
                 borderRadius: BorderRadius.circular(25),
-                color: primarycolor,
+                onTap: () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => PagePanduan(),
+                      ));
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Get Start",
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  height: 50,
+                  width: 300,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: primarycolor,
+                  ),
+                ),
               ),
-            ),
-          ),
-          Spacer(
-            flex: spacerBawah,
+              Spacer(
+                flex: spacerBawah,
+              ),
+            ],
           ),
         ],
       ),

@@ -344,6 +344,7 @@ class _PageDashboardState extends State<PageDashboard> {
           return Center(
             child: SpinKitFadingFour(
               size: 30,
+              color: primarycolor,
             ),
           );
         }

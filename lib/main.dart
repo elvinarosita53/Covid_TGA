@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:menu_login/page/page_dashboard.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:menu_login/page/page_getStart.dart';
+import 'package:menu_login/page/page_tabel.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized(); //add this line code
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: [
         const Locale('id'), // Indonesia, no country code
       ],
-      home: PageDashboard(),
+      home: PageTabel(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(textTheme: GoogleFonts.loraTextTheme()),
     );

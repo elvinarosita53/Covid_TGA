@@ -48,15 +48,6 @@ class Template extends StatelessWidget {
                     },
                   ),
                 );
-              } else {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return PageDashboard();
-                    },
-                  ),
-                );
               }
             },
             itemBuilder: (context) => [
@@ -67,10 +58,6 @@ class Template extends StatelessWidget {
               PopupMenuItem(
                 child: Text("Log Out"),
                 value: "Log Out",
-              ),
-              PopupMenuItem(
-                child: Text("Menu Utama"),
-                value: "Menu Utama",
               ),
             ],
           )
