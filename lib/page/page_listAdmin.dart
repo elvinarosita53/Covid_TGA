@@ -164,16 +164,10 @@ class _PageListAdminState extends State<PageListAdmin> {
                     },
                   );
                 } else {
-                  return Center(
-                    child: SpinKitFadingFour(
-                      color: textPrimaeyColor,
-                      size: 80,
-                      duration: Duration(milliseconds: 500),
-
-                      // controller: AnimationController(
-                      //     vsync: ,
-                      //     duration: const Duration(milliseconds: 1200)),
-                    ),
+                  return Container(
+                    height: MediaQuery.of(context).size.height - 230,
+                    alignment: Alignment.center,
+                    child: loading,
                   );
                 }
               }),

@@ -5,6 +5,9 @@ import 'package:intl/intl.dart';
 import 'package:menu_login/widget/constant.dart';
 
 class BuildChart extends StatelessWidget {
+  final String currentKecamatan;
+  BuildChart({this.currentKecamatan});
+
   List dataTanggal;
   List<String> dataBulan;
   List dataCovid;
@@ -17,6 +20,7 @@ class BuildChart extends StatelessWidget {
   LineChartBarData grafikPositif;
   LineChartBarData grafikTersuspek;
   Map<String, Map> kasusPerBulan;
+
   @override
   Widget build(BuildContext context) {
     setAwalDataKasus();
@@ -30,7 +34,11 @@ class BuildChart extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(20),
         child: StreamBuilder<QuerySnapshot>(
-          stream: backendLineBar.snapshots(),
+          stream: (currentKecamatan != null)
+              ? backendLineBar
+                  .where('kecamatan', isEqualTo: currentKecamatan)
+                  .snapshots()
+              : backendLineBar.snapshots(),
           builder: (context, snapshot) {
             // NOTE cheek ada snpashot atau tidak
             if (snapshot.hasData) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:menu_login/main_page.dart';
 import 'package:menu_login/page/page_dashboard.dart';
 import 'package:menu_login/page/page_panduan.dart';
 import 'package:menu_login/widget/constant.dart';
@@ -93,7 +94,7 @@ class PageGetStart extends StatelessWidget {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => PagePanduan(),
+                        builder: (context) => MainPage(),
                       ));
                 },
                 child: Container(

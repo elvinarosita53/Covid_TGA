@@ -49,20 +49,37 @@ class _PageDashboardState extends State<PageDashboard> {
   Widget build(BuildContext context) {
     return Template(
       body: ListView(
-        children: [
-          searchBox(context),
-          Card(
-            elevation: 4,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            margin: EdgeInsets.all(15),
-            child: BuildChart(),
-          ),
-          buildCarosel(),
-          //NOTE untuk botton kesimpulan grafik
-          BuildKesimpulan(),
-        ],
+        children: (currentKecamatan == null)
+            ? [
+                searchBox(context),
+                Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  margin: EdgeInsets.all(15),
+                  child: BuildChart(
+                    currentKecamatan: currentKecamatan,
+                  ),
+                ),
+                buildCarosel(),
+                //NOTE untuk botton kesimpulan grafik
+                BuildKesimpulan(),
+              ]
+            : [
+                searchBox(context),
+                Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  margin: EdgeInsets.all(15),
+                  child: BuildChart(
+                    currentKecamatan: currentKecamatan,
+                  ),
+                ),
+                buildCarosel()
+              ],
       ),
     );
   }
@@ -99,13 +116,7 @@ class _PageDashboardState extends State<PageDashboard> {
             isDense: true,
             contentPadding: EdgeInsets.zero,
           ),
-          items: [
-            "kec.a",
-            "kec.b",
-            "kec.c",
-            "kec.d",
-            "kec.e",
-          ],
+          items: kecamatan,
 
           hint: "Search",
           maxHeight: 300,
@@ -125,7 +136,11 @@ class _PageDashboardState extends State<PageDashboard> {
 //NOTE untuk carousel geser datanya
   Widget buildCarosel() {
     return StreamBuilder<QuerySnapshot>(
-      stream: backendGrafik.snapshots(),
+      stream: (currentKecamatan != null)
+          ? backendGrafik
+              .where('kecamatan', isEqualTo: currentKecamatan)
+              .snapshots()
+          : backendGrafik.snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           dataCovid =

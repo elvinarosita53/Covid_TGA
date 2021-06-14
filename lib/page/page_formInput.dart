@@ -105,7 +105,7 @@ class _PageFormInputState extends State<PageFormInput> {
                   isDense: true,
                   contentPadding: EdgeInsets.zero,
                 ),
-                items: Kecamatan,
+                items: kecamatan,
                 selectedItem: currentKecamatan,
                 hint: "Kecamatan",
                 maxHeight: 400,

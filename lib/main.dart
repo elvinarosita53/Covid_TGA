@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:menu_login/main_page.dart';
 import 'package:menu_login/page/page_dashboard.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:menu_login/page/page_getStart.dart';
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: [
         const Locale('id'), // Indonesia, no country code
       ],
-      home: PageTabel(),
+      home: PageGetStart(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(textTheme: GoogleFonts.loraTextTheme()),
     );

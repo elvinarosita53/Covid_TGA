@@ -13,12 +13,14 @@ class PageTabel extends StatefulWidget {
 }
 
 class _PageTabelState extends State<PageTabel> {
+  List<Map> dataTampilKecamatan;
   Map<String, Map> kasusPerKecamatan;
   List dataKecamatan;
   List dataCovid;
   List total;
-  bool isAscending = false;
+  bool isAscending = true;
   String currentKecamatan;
+
   CollectionReference backendTabel =
       FirebaseFirestore.instance.collection('data_covid');
   @override
@@ -182,7 +184,7 @@ class _PageTabelState extends State<PageTabel> {
                               break;
                           }
                         }
-
+                        //untuk proses data tabel
                         Map dataBaruKecamatan = {
                           "Kecamatan Bate": {},
                           "Kecamatan Delima": {},
@@ -209,62 +211,65 @@ class _PageTabelState extends State<PageTabel> {
                         };
 
                         kasusPerKecamatan.forEach(
-                          (key, value) {
+                          (namaKecamatan, isiTerjumlah) {
                             // untuk data meninggal tertinggi berdasarkan usia
-                            dataBaruKecamatan[key]['meninggal'] =
-                                value['Konfirmasi Meninggal'] +
-                                    value['Suspek Meninggal/Probable'];
+                            dataBaruKecamatan[namaKecamatan]['meninggal'] =
+                                isiTerjumlah['Konfirmasi Meninggal'] +
+                                    isiTerjumlah['Suspek Meninggal/Probable'];
 
                             // untuk data 5 keterangan
-                            dataBaruKecamatan[key]['positif'] =
-                                value['Jumlah Kasus Konfirmasi'];
+                            dataBaruKecamatan[namaKecamatan]['positif'] =
+                                isiTerjumlah['Jumlah Kasus Konfirmasi'];
 
-                            dataBaruKecamatan[key]['sembuh'] =
-                                value['Jumlah PDP Sehat'] +
-                                    value['Discarded'] +
-                                    value['Konfirmasi Sembuh'];
-                            dataBaruKecamatan[key]['meninggal'] =
-                                value['Konfirmasi Meninggal'] +
-                                    value['Suspek Meninggal/Probable'];
-                            dataBaruKecamatan[key]['dirawat'] =
-                                value['Konfirmasi Dirawat'];
+                            dataBaruKecamatan[namaKecamatan]['sembuh'] =
+                                isiTerjumlah['Jumlah PDP Sehat'] +
+                                    isiTerjumlah['Discarded'] +
+                                    isiTerjumlah['Konfirmasi Sembuh'];
+                            dataBaruKecamatan[namaKecamatan]['meninggal'] =
+                                isiTerjumlah['Konfirmasi Meninggal'] +
+                                    isiTerjumlah['Suspek Meninggal/Probable'];
+                            dataBaruKecamatan[namaKecamatan]['dirawat'] =
+                                isiTerjumlah['Konfirmasi Dirawat'];
 
-                            dataBaruKecamatan[key]['tersuspek'] =
-                                value['Jumlah Suspek'] +
-                                    value['Suspek Dirawat'] +
-                                    value['Suspek Isolasi Mandiri'] +
-                                    value['Suspek Terkonfirmasi'] +
-                                    value['Konfirmasi Isolasi Mandiri'] +
-                                    value['Jumlah ODP Selesai Pantau'];
+                            dataBaruKecamatan[namaKecamatan]['tersuspek'] =
+                                isiTerjumlah['Jumlah Suspek'] +
+                                    isiTerjumlah['Suspek Dirawat'] +
+                                    isiTerjumlah['Suspek Isolasi Mandiri'] +
+                                    isiTerjumlah['Suspek Terkonfirmasi'] +
+                                    isiTerjumlah['Konfirmasi Isolasi Mandiri'] +
+                                    isiTerjumlah['Jumlah ODP Selesai Pantau'];
                           },
                         );
                         print('dataCovid : $dataCovid');
                         print('kecamatan $dataKecamatan');
                         print("kasus $kasusPerKecamatan");
                         print("data baru Kecamatan $dataBaruKecamatan");
-
-                        List<Map> dataTampilKecamatan = [];
-                        // int count = 0;
+                        dataTampilKecamatan = [];
                         dataBaruKecamatan.forEach((kecamatan, value) {
-                          // [
-                          //   {
-                          //     'kecamatan' : '[nama kecamatan]',
-                          //     'keterangan' : '[nama kecamatan]',
-                          //     'jumlah' : '[nama kecamatan]',
-                          //   }
-                          // ]
                           value.forEach((keterangan, total) {
                             if (total != 0) {
+                              //untuk menambahkn item di list .add
                               dataTampilKecamatan.add(
                                 {
                                   "kecamatan": kecamatan,
                                   'keterangan': keterangan,
-                                  'total': total
+                                  'total': total,
                                 },
                               );
+                              if (isAscending == true) {
+                                // isAscending = false;
+                                dataTampilKecamatan.sort(
+                                    (a, b) => b['total'].compareTo(a['total']));
+                              } else {
+                                // isAscending = true;
+
+                                dataTampilKecamatan.sort(
+                                    (a, b) => a['total'].compareTo(b['total']));
+                              }
                             }
                           });
                         });
+                        print("data ta,pil $dataTampilKecamatan");
 
                         return DataTable(
                           sortColumnIndex: 2,
@@ -290,14 +295,20 @@ class _PageTabelState extends State<PageTabel> {
                               ),
                             ),
                             DataColumn(
+                              //mengurutkan data besar ke kecil atau kecil ke besar
+
                               onSort: (columnIndex, ascending) {
+                                print('ascending $ascending');
                                 if (ascending) {
                                   isAscending = true;
-                                  setState(() {});
+                                  // dataTampilKecamatan.sort((a, b) =>
+                                  //     a['total'].compareTo(b['total']));
                                 } else {
                                   isAscending = false;
-                                  setState(() {});
+                                  // dataTampilKecamatan.sort((a, b) =>
+                                  //     b['total'].compareTo(a['total']));
                                 }
+                                setState(() {});
                               },
                               label: Text(
                                 "Total",
@@ -321,7 +332,11 @@ class _PageTabelState extends State<PageTabel> {
                               .toList(),
                         );
                       } else {
-                        return loading;
+                        return Container(
+                          height: MediaQuery.of(context).size.height - 230,
+                          alignment: Alignment.center,
+                          child: loading,
+                        );
                       }
                     }),
               ),
