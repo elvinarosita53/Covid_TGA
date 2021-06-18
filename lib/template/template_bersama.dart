@@ -1,27 +1,36 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:menu_login/main_page.dart';
 import 'package:menu_login/page/page_login.dart';
 import 'package:menu_login/page/page_dashboard.dart';
 import 'package:menu_login/widget/constant.dart';
 
-class TemplateBersama extends StatelessWidget {
+class TemplateBersama extends StatefulWidget {
   final String namaAppbar;
   final Widget body;
   final Widget floatingActionButton;
   final Widget child;
 
-  const TemplateBersama(
+  TemplateBersama(
       {@required this.namaAppbar,
       this.body,
       this.floatingActionButton,
       this.child});
 
   @override
+  _TemplateBersamaState createState() => _TemplateBersamaState();
+}
+
+class _TemplateBersamaState extends State<TemplateBersama> {
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[100],
-        floatingActionButton: floatingActionButton,
+        floatingActionButton: widget.floatingActionButton,
         body: NestedScrollView(
-          body: body,
+          body: widget.body,
           headerSliverBuilder: (context, innerBoxIsScrolled) => [
             SliverAppBar(
               floating: true,
@@ -29,7 +38,7 @@ class TemplateBersama extends StatelessWidget {
               snap: true,
               backgroundColor: primarycolor,
               title: Text(
-                namaAppbar,
+                widget.namaAppbar,
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 25,
@@ -38,10 +47,11 @@ class TemplateBersama extends StatelessWidget {
               actions: [
                 PopupMenuButton(
                   icon: Icon(
-                    Icons.more_vert,
+                    Icons.menu,
+                    size: 30,
                     color: Colors.white,
                   ),
-                  onSelected: (value) {
+                  onSelected: (value) async {
                     if (value == "Login") {
                       Navigator.push(
                         context,
@@ -52,39 +62,31 @@ class TemplateBersama extends StatelessWidget {
                         ),
                       );
                     } else if (value == "Log Out") {
-                      Navigator.push(
+                      await auth.signOut();
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return PageLogin();
-                          },
-                        ),
-                      );
-                    } else {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return PageDashboard();
+                            return MainPage();
                           },
                         ),
                       );
                     }
+                    setState(() {});
                   },
-                  itemBuilder: (context) => [
-                    PopupMenuItem(
-                      child: Text("Login"),
-                      value: "Login",
-                    ),
-                    PopupMenuItem(
-                      child: Text("Log Out"),
-                      value: "Log Out",
-                    ),
-                    PopupMenuItem(
-                      child: Text("Menu Utama"),
-                      value: "Menu Utama",
-                    ),
-                  ],
+                  itemBuilder: (context) => (auth.currentUser != null)
+                      ? [
+                          PopupMenuItem(
+                            child: Text("Log Out"),
+                            value: "Log Out",
+                          )
+                        ]
+                      : [
+                          PopupMenuItem(
+                            child: Text("Login"),
+                            value: "Login",
+                          )
+                        ],
                 )
               ],
               bottom: PreferredSize(
@@ -99,7 +101,7 @@ class TemplateBersama extends StatelessWidget {
                       color: primarycolor,
                     ),
                     height: 80,
-                    child: child,
+                    child: widget.child,
                   ),
                 ),
                 preferredSize: Size.fromHeight(80),

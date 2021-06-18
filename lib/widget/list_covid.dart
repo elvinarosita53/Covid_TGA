@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:menu_login/page/page_formInput.dart';
+import 'package:menu_login/widget/constant.dart';
 
 class ListCovid extends StatefulWidget {
   final String nama;
@@ -63,7 +64,7 @@ class _ListCovidState extends State<ListCovid> {
               onPressed: widget.onHapus,
               icon: Icon(
                 Icons.delete,
-                color: Colors.red[900],
+                color: primarycolor,
               ),
             ),
           ],

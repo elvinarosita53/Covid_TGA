@@ -7,6 +7,7 @@ import 'package:menu_login/example/page_listInstansi.dart';
 import 'package:menu_login/page/page_panduan.dart';
 import 'package:menu_login/page/page_tabel.dart';
 import 'package:menu_login/widget/constant.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -29,57 +30,40 @@ class _MainPageState extends State<MainPage> {
         : [PageInstansi(), PageListInstansi()];
 
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.red,
-        selectedLabelStyle: TextStyle(
-          color: Colors.black,
-          // backgroundColor: Colors.red,
-          decorationColor: Colors.green,
-          fontSize: 8,
-        ),
-        unselectedLabelStyle: TextStyle(
-          color: Colors.black,
-          // backgroundColor: Colors.red,
-          decorationColor: Colors.green,
-          fontSize: 8,
-        ),
+      bottomNavigationBar: SalomonBottomBar(
         currentIndex: klik,
         onTap: (value) {
-          klik = value;
-          setState(() {});
+          setState(() {
+            klik = value;
+          });
         },
         //menghilangkan lebel
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
+        // showSelectedLabels: true,
+        // showUnselectedLabels: false,
 
         items: [
-          BottomNavigationBarItem(
-            label: "FAQ",
-            icon: Icon(
-              Icons.question_answer,
-              color: primarycolor,
-            ),
+          //icon FAQ
+          SalomonBottomBarItem(
+            icon: Icon(Icons.question_answer),
+            title: Text("FAQ"),
+            selectedColor: primarycolor,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_filled,
-              color: primarycolor,
-            ),
-            label: "Beranda",
+          //icon Home
+          SalomonBottomBarItem(
+            icon: Icon(Icons.home),
+            title: Text("Home"),
+            selectedColor: primarycolor,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.list,
-              color: primarycolor,
-            ),
-            label: "List",
+
+          SalomonBottomBarItem(
+            icon: Icon(Icons.list),
+            title: Text("List"),
+            selectedColor: primarycolor,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person,
-              color: primarycolor,
-            ),
-            label: "Dashboard",
+          SalomonBottomBarItem(
+            icon: Icon(Icons.person),
+            title: Text("Dashboar"),
+            selectedColor: primarycolor,
           ),
         ],
       ),

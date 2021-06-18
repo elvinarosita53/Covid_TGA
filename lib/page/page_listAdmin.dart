@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:menu_login/page/page_formInput.dart';
 import 'package:menu_login/widget/constant.dart';
 import 'package:menu_login/widget/list_covid.dart';
@@ -23,6 +22,7 @@ class _PageListAdminState extends State<PageListAdmin> {
   Widget build(BuildContext context) {
     return TemplateBersama(
       floatingActionButton: FloatingActionButton(
+        backgroundColor: primarycolor,
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.push(
@@ -147,8 +147,8 @@ class _PageListAdminState extends State<PageListAdmin> {
                                               .doc(listID[index])
                                               .delete()
                                               .then((value) {
-                                            Fluttertoast.showToast(
-                                                msg: "Berhasil");
+                                            // Fluttertoast.showToast(
+                                            //     msg: "Berhasil");
                                           });
                                           Navigator.pop(context);
                                         },

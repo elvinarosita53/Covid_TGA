@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:menu_login/main_page.dart';
 import 'package:menu_login/page/page_profil.dart';
 
 class PageLogin extends StatefulWidget {
@@ -12,8 +15,9 @@ class PageLogin extends StatefulWidget {
 }
 
 class _PageLoginState extends State<PageLogin> {
-  TextEditingController email = TextEditingController();
-  TextEditingController passwordcontroller = TextEditingController();
+  FirebaseAuth auth = FirebaseAuth.instance;
+  TextEditingController contorllerEmail = TextEditingController();
+  TextEditingController controllerPassword = TextEditingController();
   @override
   Widget build(BuildContext context) {
     // deklarasi firebase
@@ -29,11 +33,11 @@ class _PageLoginState extends State<PageLogin> {
         onTap: () {
           user_pengguna.add({
             //bentu map
-            'email': email.text,
-            'password': passwordcontroller.text,
+            'email': contorllerEmail.text,
+            'password': controllerPassword.text,
           });
-          email.text = '';
-          passwordcontroller.text = '';
+          contorllerEmail.text = '';
+          controllerPassword.text = '';
           setState(() {});
         },
         child: Container(
@@ -51,7 +55,7 @@ class _PageLoginState extends State<PageLogin> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextField(
-                    controller: email,
+                    controller: contorllerEmail,
                     decoration: InputDecoration(
                       hintText: "Email",
                       border: OutlineInputBorder(
@@ -63,7 +67,7 @@ class _PageLoginState extends State<PageLogin> {
                   ),
                   TextField(
                     obscureText: true,
-                    controller: passwordcontroller,
+                    controller: controllerPassword,
                     decoration: InputDecoration(
                       hintText: "Password",
                       border: OutlineInputBorder(
@@ -74,13 +78,27 @@ class _PageLoginState extends State<PageLogin> {
                     height: 20,
                   ),
                   GestureDetector(
-                    onTap: () {
-                      //pushreplacement gak bisa balik ke page awal
-                      Navigator.pushReplacement(context, MaterialPageRoute(
-                        builder: (context) {
-                          return PageProfil();
+                    onTap: () async {
+                      Fluttertoast.showToast(msg: "Tombol di klik");
+                      await auth
+                          .signInWithEmailAndPassword(
+                              email: contorllerEmail.text,
+                              password: controllerPassword.text)
+                          .then(
+                        (value) {
+                          Fluttertoast.showToast(msg: "Berhasil");
+                          // return value;
                         },
-                      ));
+                      );
+                      //pushreplacement gak bisa balik ke page awal
+                      // Navigator.pushReplacement(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) {
+                      //       return MainPage();
+                      //     },
+                      //   ),
+                      // );
                     },
                     child: Container(
                       child: Center(

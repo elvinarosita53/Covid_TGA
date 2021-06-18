@@ -10,12 +10,6 @@ import 'package:menu_login/widget/constant.dart';
 import 'package:menu_login/template/template.dart';
 import 'package:menu_login/widget/tabelBottomShow.dart';
 
-// //searchBox
-// searchBox(context),
-// //grafik data
-// buildChart(context),
-// //carosel
-// buildCarosel(),
 class PageDashboard extends StatefulWidget {
   @override
   _PageDashboardState createState() => _PageDashboardState();

@@ -94,8 +94,9 @@ List<String> keterangans = [
   "KONFORMASI MENINGGAL"
 ];
 
-Color primarycolor = Colors.blue[900];
-Color textPrimaeyColor = Colors.blue[700];
+Color primarycolor = Color(0xff0C253A);
+Color textPrimaryColor = Color(0xff141f2b);
+Color secondarycolor = Colors.blue[200];
 
 /// warna ini untuk tulisan search
 Color primarySearchColor = Colors.white.withOpacity(0.2);
@@ -105,14 +106,14 @@ String judulPanduan =
 
 //untuk list panduang covid
 List<Map> dataPanduan = [
-  {'warna': Colors.orange, 'kasus': "Kasus Suspek", 'penjelasan': ""},
-  {'warna': Colors.yellow, 'kasus': "Kasus Probable"},
-  {'warna': Colors.green, 'kasus': "Kasus Konfirmasi"},
-  {'warna': Colors.pink, 'kasus': "Kasus Erat"},
-  {'warna': Colors.grey, 'kasus': "Pelaku Perjalan"},
-  {'warna': Colors.blueAccent, 'kasus': "Discarded"},
-  {'warna': Colors.blue[900], 'kasus': "Selesai Isolasi"},
-  {'warna': Colors.red, 'kasus': "Kematian"},
+  {'warna': Colors.orange, 'kasus': "KASUS SUSPEK", 'penjelasan': ""},
+  {'warna': Colors.yellow, 'kasus': "KASUS PROBABLE"},
+  {'warna': Colors.green, 'kasus': "KASUS KONFIRMASI"},
+  {'warna': Colors.pink, 'kasus': "KONTAK ERAT"},
+  {'warna': Colors.grey, 'kasus': "PELAKU PERJALANA"},
+  {'warna': Colors.blueAccent, 'kasus': "DISCARDED"},
+  {'warna': Colors.blue[900], 'kasus': "SELESAI ISOLASI"},
+  {'warna': Colors.red, 'kasus': "KEMATIAN"},
 ];
 
 SpinKitFadingFour loading = SpinKitFadingFour(

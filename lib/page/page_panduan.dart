@@ -1,10 +1,20 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:menu_login/main_page.dart';
 import 'package:menu_login/page/page_dashboard.dart';
 import 'package:menu_login/page/page_login.dart';
 import 'package:menu_login/widget/constant.dart';
+import 'package:menu_login/widget/infoPanduan.dart';
 
-class PagePanduan extends StatelessWidget {
+class PagePanduan extends StatefulWidget {
+  @override
+  _PagePanduanState createState() => _PagePanduanState();
+}
+
+class _PagePanduanState extends State<PagePanduan> {
+  FirebaseAuth auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +33,7 @@ class PagePanduan extends StatelessWidget {
               size: 30,
               color: Colors.white,
             ),
-            onSelected: (value) {
+            onSelected: (value) async {
               if (value == "Login") {
                 Navigator.push(
                   context,
@@ -34,39 +44,31 @@ class PagePanduan extends StatelessWidget {
                   ),
                 );
               } else if (value == "Log Out") {
-                Navigator.push(
+                await auth.signOut();
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return PageLogin();
-                    },
-                  ),
-                );
-              } else {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return PageDashboard();
+                      return MainPage();
                     },
                   ),
                 );
               }
+              setState(() {});
             },
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                child: Text("Login"),
-                value: "Login",
-              ),
-              PopupMenuItem(
-                child: Text("Log Out"),
-                value: "Log Out",
-              ),
-              PopupMenuItem(
-                child: Text("Menu Utama"),
-                value: "Menu Utama",
-              ),
-            ],
+            itemBuilder: (context) => (auth.currentUser != null)
+                ? [
+                    PopupMenuItem(
+                      child: Text("Log Out"),
+                      value: "Log Out",
+                    )
+                  ]
+                : [
+                    PopupMenuItem(
+                      child: Text("Login"),
+                      value: "Login",
+                    )
+                  ],
           )
         ],
         elevation: 0,
@@ -120,7 +122,6 @@ class PagePanduan extends StatelessWidget {
                     children: dataPanduan
                         .map(
                           (perItem) => InfoPanduan(
-                            warnaPanduan: perItem['warna'],
                             judulPanduan: perItem['kasus'],
                           ),
                         )
@@ -129,32 +130,6 @@ class PagePanduan extends StatelessWidget {
             ),
           )
         ],
-      ),
-    );
-  }
-}
-
-class InfoPanduan extends StatelessWidget {
-  final Color warnaPanduan;
-  final String judulPanduan;
-
-  InfoPanduan({@required this.warnaPanduan, @required this.judulPanduan});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      elevation: 4,
-      child: Container(
-        child: Text(judulPanduan),
-        padding: EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: warnaPanduan,
-          borderRadius: BorderRadius.circular(10),
-        ),
       ),
     );
   }

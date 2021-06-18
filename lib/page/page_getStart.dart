@@ -11,14 +11,14 @@ class PageGetStart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: primarycolor,
       body: Stack(
         children: [
           Container(
             height: MediaQuery.of(context).size.height / 2,
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-              color: primarycolor,
+              color: textPrimaryColor,
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(70),
                 bottomRight: Radius.circular(70),
@@ -29,55 +29,66 @@ class PageGetStart extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              // SizedBox(
+              //   width: MediaQuery.of(context).size.width,
+              // ),
+              // Spacer(
+              //   flex: spacerAtas,
+              // ),
+              Image(
+                width: 350,
+                image: AssetImage("images/NEW.png"),
+              ),
+              // Icon(
+              //   Icons.format_quote,
+              //   color: Colors.white,
+              //   size: 80,
+              // ),
+
+              // SizedBox(height: 20),
+
               SizedBox(
                 width: MediaQuery.of(context).size.width,
-              ),
-              Spacer(
-                flex: spacerAtas,
-              ),
-              Icon(
-                Icons.format_quote,
-                color: Colors.white,
-                size: 80,
-              ),
-              Text(
-                "Bersama Kita Cegah Penyebaran",
-                style: TextStyle(
-                    fontSize: 17,
-                    fontStyle: FontStyle.italic,
-                    color: Colors.blue[100]),
-              ),
-              SizedBox(height: 20),
-
-              Text(
-                "COVID-19",
-                style: TextStyle(
-                  fontSize: 60,
-                  // fontStyle: FontStyle.italic,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white,
-                ),
-              ),
-              SizedBox(
-                height: 100,
-              ),
-              SizedBox(
-                width: 300,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Column(
                   children: [
-                    TigaM(
-                      judul: "Memakai \nMasker",
-                      gambar: Icons.masks_outlined,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TigaM(
+                          judul: "Memakai \nMasker",
+                          gambar: "images/memakai masker.png",
+                        ),
+                        TigaM(
+                          judul: "Mencuci \nTangan",
+                          gambar: "images/jabat_tangan.png",
+                        ),
+                        TigaM(
+                          judul: "Menjaga \nJarak",
+                          gambar: "images/jaga_jarak.png",
+                        ),
+                      ],
                     ),
-                    TigaM(
-                      judul: "Mencuci \nTangan",
-                      gambar: Icons.wash_outlined,
+                    SizedBox(
+                      height: 20,
                     ),
-                    TigaM(
-                      judul: "Menjaga \nJarak",
-                      gambar: Icons.social_distance_outlined,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        TigaM(
+                          judul: "Memakai \nMasker",
+                          gambar: "images/memakai masker.png",
+                        ),
+                        TigaM(
+                          judul: "Mencuci \nTangan",
+                          gambar: "images/jabat_tangan.png",
+                        ),
+                        TigaM(
+                          judul: "Menjaga \nJarak",
+                          gambar: "images/jaga_jarak.png",
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -97,20 +108,26 @@ class PageGetStart extends StatelessWidget {
                         builder: (context) => MainPage(),
                       ));
                 },
-                child: Container(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "Get Start",
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  height: 50,
-                  width: 300,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    color: primarycolor,
+                child: Material(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(25),
+                  child: Container(
+                    margin: EdgeInsets.all(3),
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Get Start",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: textPrimaryColor,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    height: 50,
+                    width: 300,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: textPrimaryColor, width: 3),
+                      borderRadius: BorderRadius.circular(25),
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
@@ -127,7 +144,8 @@ class PageGetStart extends StatelessWidget {
 
 class TigaM extends StatelessWidget {
   final String judul;
-  final IconData gambar;
+  // final IconData gambar;
+  final String gambar;
 
   const TigaM({@required this.judul, @required this.gambar});
 
@@ -136,38 +154,21 @@ class TigaM extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Container(
-          alignment: Alignment.center,
-          child: Icon(
-            gambar,
-            size: (gambar == Icons.masks_outlined) ? 60 : 40,
-            color: Colors.white,
-          ),
-          height: 90,
-          width: 90,
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  blurRadius: 2,
-                  spreadRadius: 3,
-                  offset: Offset(1, 1)),
-            ],
-            color: Colors.blue,
-            borderRadius: BorderRadius.circular(50),
-          ),
+        Image(
+          height: MediaQuery.of(context).size.width / 3 - 50,
+          width: MediaQuery.of(context).size.width / 3 - 50,
+          fit: BoxFit.cover,
+          image: AssetImage(gambar),
         ),
         Container(
-          width: 100,
+          width: MediaQuery.of(context).size.width / 3 - 50,
           // color: Colors.amber,
-          margin: EdgeInsets.only(
-            top: 10,
-          ),
+
           child: Text(
             judul,
             style: TextStyle(
-              fontSize: 15,
-              color: textPrimaeyColor,
+              fontSize: 12,
+              color: Colors.white,
             ),
             textAlign: TextAlign.center,
           ),

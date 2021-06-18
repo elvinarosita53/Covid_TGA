@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:menu_login/widget/build_chart.dart';
 import 'package:menu_login/widget/list_covid.dart';
 import 'package:menu_login/widget/list_keterangan.dart';
-import 'package:menu_login/template/template_instansi.dart';
+import 'package:menu_login/example/template_instansi.dart';
 
 class PageInstansi extends StatelessWidget {
   @override

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:intl/intl.dart';
 import 'package:menu_login/widget/Input_data.dart';
 import 'package:menu_login/widget/constant.dart';
@@ -461,7 +461,7 @@ class _PageFormInputState extends State<PageFormInput> {
                         'tata laksanan yang dilakukan': tataLaksana.text,
                         'keterangan': currentKeterangan,
                       }).then((value) {
-                        Fluttertoast.showToast(msg: "Berhasil Update");
+                        // Fluttertoast.showToast(msg: "Berhasil Update");
                         Navigator.pop(context);
                       });
                     },

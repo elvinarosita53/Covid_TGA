@@ -1,14 +1,23 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:menu_login/main_page.dart';
 import 'package:menu_login/page/page_dashboard.dart';
 
 import 'package:menu_login/page/page_login.dart';
 import 'package:menu_login/widget/constant.dart';
 
-class Template extends StatelessWidget {
+class Template extends StatefulWidget {
   final Widget body;
 
-  const Template({this.body});
+  Template({this.body});
+
+  @override
+  _TemplateState createState() => _TemplateState();
+}
+
+class _TemplateState extends State<Template> {
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +38,7 @@ class Template extends StatelessWidget {
               size: 30,
               color: Colors.white,
             ),
-            onSelected: (value) {
+            onSelected: (value) async {
               if (value == "Login") {
                 Navigator.push(
                   context,
@@ -40,32 +49,37 @@ class Template extends StatelessWidget {
                   ),
                 );
               } else if (value == "Log Out") {
-                Navigator.push(
+                await auth.signOut();
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return PageLogin();
+                      return MainPage();
                     },
                   ),
                 );
               }
+              setState(() {});
             },
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                child: Text("Login"),
-                value: "Login",
-              ),
-              PopupMenuItem(
-                child: Text("Log Out"),
-                value: "Log Out",
-              ),
-            ],
+            itemBuilder: (context) => (auth.currentUser != null)
+                ? [
+                    PopupMenuItem(
+                      child: Text("Log Out"),
+                      value: "Log Out",
+                    )
+                  ]
+                : [
+                    PopupMenuItem(
+                      child: Text("Login"),
+                      value: "Login",
+                    )
+                  ],
           )
         ],
         elevation: 0,
         // leading: IconButton(icon: men, onPressed: onPressed),
       ),
-      body: body,
+      body: widget.body,
     );
   }
 }

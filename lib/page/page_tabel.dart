@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:menu_login/main_page.dart';
 import 'package:menu_login/page/page_login.dart';
 import 'package:menu_login/widget/build_chart.dart';
 import 'package:menu_login/widget/constant.dart';
@@ -13,13 +15,15 @@ class PageTabel extends StatefulWidget {
 }
 
 class _PageTabelState extends State<PageTabel> {
+  FirebaseAuth auth = FirebaseAuth.instance;
   List<Map> dataTampilKecamatan;
   Map<String, Map> kasusPerKecamatan;
   List dataKecamatan;
   List dataCovid;
   List total;
   bool isAscending = true;
-  String currentKecamatan;
+  // String currentKecamatan;
+  String currentKeterangan;
 
   CollectionReference backendTabel =
       FirebaseFirestore.instance.collection('data_covid');
@@ -40,7 +44,7 @@ class _PageTabelState extends State<PageTabel> {
               size: 30,
               color: Colors.white,
             ),
-            onSelected: (value) {
+            onSelected: (value) async {
               if (value == "Login") {
                 Navigator.push(
                   context,
@@ -51,26 +55,31 @@ class _PageTabelState extends State<PageTabel> {
                   ),
                 );
               } else if (value == "Log Out") {
-                Navigator.push(
+                await auth.signOut();
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return PageLogin();
+                      return MainPage();
                     },
                   ),
                 );
               }
+              setState(() {});
             },
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                child: Text("Login"),
-                value: "Login",
-              ),
-              PopupMenuItem(
-                child: Text("Log Out"),
-                value: "Log Out",
-              ),
-            ],
+            itemBuilder: (context) => (auth.currentUser != null)
+                ? [
+                    PopupMenuItem(
+                      child: Text("Log Out"),
+                      value: "Log Out",
+                    )
+                  ]
+                : [
+                    PopupMenuItem(
+                      child: Text("Login"),
+                      value: "Login",
+                    )
+                  ],
           )
         ],
         elevation: 0,
@@ -270,67 +279,57 @@ class _PageTabelState extends State<PageTabel> {
                           });
                         });
                         print("data ta,pil $dataTampilKecamatan");
+                        print("current keterangan $currentKeterangan");
 
                         return DataTable(
-                          sortColumnIndex: 2,
-                          sortAscending: isAscending,
-                          horizontalMargin: 0,
-                          columns: [
-                            DataColumn(
-                              label: Text(
-                                "Kecamatan",
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    color: textPrimaeyColor,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            DataColumn(
-                              label: Text(
-                                "Keterangan",
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    color: textPrimaeyColor,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            DataColumn(
-                              //mengurutkan data besar ke kecil atau kecil ke besar
-
-                              onSort: (columnIndex, ascending) {
-                                print('ascending $ascending');
-                                if (ascending) {
-                                  isAscending = true;
-                                  // dataTampilKecamatan.sort((a, b) =>
-                                  //     a['total'].compareTo(b['total']));
-                                } else {
-                                  isAscending = false;
-                                  // dataTampilKecamatan.sort((a, b) =>
-                                  //     b['total'].compareTo(a['total']));
-                                }
-                                setState(() {});
-                              },
-                              label: Text(
-                                "Total",
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    color: textPrimaeyColor,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ],
-                          rows: dataTampilKecamatan
-                              .map(
-                                (perItem) => DataRow(
-                                  cells: [
-                                    DataCell(Text(perItem['kecamatan'])),
-                                    DataCell(Text(perItem['keterangan'])),
-                                    DataCell(Text(perItem['total'].toString())),
-                                  ],
+                            sortColumnIndex: 2,
+                            sortAscending: isAscending,
+                            horizontalMargin: 0,
+                            columns: [
+                              DataColumn(
+                                label: Text(
+                                  "Kecamatan",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: textPrimaryColor,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                              )
-                              .toList(),
-                        );
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  "Keterangan",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: textPrimaryColor,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              DataColumn(
+                                //mengurutkan data besar ke kecil atau kecil ke besar
+
+                                onSort: (columnIndex, ascending) {
+                                  print('ascending $ascending');
+                                  if (ascending) {
+                                    isAscending = true;
+                                    // dataTampilKecamatan.sort((a, b) =>
+                                    //     a['total'].compareTo(b['total']));
+                                  } else {
+                                    isAscending = false;
+                                    // dataTampilKecamatan.sort((a, b) =>
+                                    //     b['total'].compareTo(a['total']));
+                                  }
+                                  setState(() {});
+                                },
+                                label: Text(
+                                  "Total",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: textPrimaryColor,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                            rows: dataTabel());
                       } else {
                         return Container(
                           height: MediaQuery.of(context).size.height - 230,
@@ -345,6 +344,49 @@ class _PageTabelState extends State<PageTabel> {
         ],
       ),
     );
+  }
+
+  List<DataRow> dataTabel() {
+    List<DataRow> dataTabel = [];
+    for (var i = 0; i < dataTampilKecamatan.length; i++) {
+      if (currentKeterangan == null) {
+        dataTabel.add(
+          DataRow(
+            cells: [
+              DataCell(
+                Text(dataTampilKecamatan[i]["kecamatan"]),
+              ),
+              DataCell(
+                Text(dataTampilKecamatan[i]["keterangan"]),
+              ),
+              DataCell(
+                Text(dataTampilKecamatan[i]["total"].toString()),
+              ),
+            ],
+          ),
+        );
+      } else if (currentKeterangan.toLowerCase() ==
+          dataTampilKecamatan[i]['keterangan']) {
+        dataTabel.add(
+          DataRow(
+            cells: [
+              DataCell(
+                Text(dataTampilKecamatan[i]["kecamatan"]),
+              ),
+              DataCell(
+                Text(dataTampilKecamatan[i]["keterangan"]),
+              ),
+              DataCell(
+                Text(dataTampilKecamatan[i]["total"].toString()),
+              ),
+            ],
+          ),
+        );
+      } else {
+        continue;
+      }
+    }
+    return dataTabel;
   }
 
   Widget searchBox(BuildContext context) {
@@ -379,11 +421,11 @@ class _PageTabelState extends State<PageTabel> {
             contentPadding: EdgeInsets.zero,
           ),
           items: [
-            "kec.a",
-            "kec.b",
-            "kec.c",
-            "kec.d",
-            "kec.e",
+            'meninggal',
+            'tersuspek',
+            'dirawat',
+            'sembuh',
+            'positif',
           ],
 
           hint: "Search",
@@ -392,7 +434,7 @@ class _PageTabelState extends State<PageTabel> {
           clearButtonBuilder: (context) => Icon(Icons.cancel),
           // label: "Search",
           onChanged: (value) {
-            currentKecamatan = value;
+            currentKeterangan = value;
             setState(() {});
           },
           showSearchBox: true,
