@@ -5,7 +5,6 @@ import 'package:menu_login/main_page.dart';
 import 'package:menu_login/widget/constant.dart';
 
 class PageProfil extends StatelessWidget {
-  TextEditingController contorllerEmail = TextEditingController();
   FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
@@ -110,7 +109,7 @@ class PageProfil extends StatelessWidget {
                     borderRadius: BorderRadius.circular(25),
                     onTap: () async {
                       await auth
-                          .sendPasswordResetEmail(email: contorllerEmail.text)
+                          .sendPasswordResetEmail(email: auth.currentUser.email)
                           .then(
                         (value) {
                           Fluttertoast.showToast(

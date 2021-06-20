@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: [
         const Locale('id'), // Indonesia, no country code
       ],
-      home: PageProfil(),
+      home: PageLogin(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: GoogleFonts.montserratTextTheme(),
