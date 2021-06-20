@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:menu_login/example/page_admin.dart';
 import 'package:menu_login/example/page_instansi.dart';
@@ -15,19 +16,18 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  FirebaseAuth auth = FirebaseAuth.instance;
   int klik = 0;
   bool isAdmin = true;
 
   @override
   Widget build(BuildContext context) {
-    List pageTujuan = (isAdmin)
-        ? [
-            PagePanduan(),
-            PageDashboard(),
-            PageTabel(),
-            PageListAdmin(),
-          ]
-        : [PageInstansi(), PageListInstansi()];
+    List pageTujuan = [
+      PagePanduan(),
+      PageDashboard(),
+      PageTabel(),
+      PageListAdmin(),
+    ];
 
     return Scaffold(
       bottomNavigationBar: SalomonBottomBar(
@@ -41,31 +41,52 @@ class _MainPageState extends State<MainPage> {
         // showSelectedLabels: true,
         // showUnselectedLabels: false,
 
-        items: [
-          //icon FAQ
-          SalomonBottomBarItem(
-            icon: Icon(Icons.question_answer),
-            title: Text("FAQ"),
-            selectedColor: primarycolor,
-          ),
-          //icon Home
-          SalomonBottomBarItem(
-            icon: Icon(Icons.home),
-            title: Text("Home"),
-            selectedColor: primarycolor,
-          ),
+        items: (auth.currentUser != null)
+            ? [
+                //icon FAQ
+                SalomonBottomBarItem(
+                  icon: Icon(Icons.question_answer),
+                  title: Text("Panduan"),
+                  selectedColor: primarycolor,
+                ),
+                //icon Home
+                SalomonBottomBarItem(
+                  icon: Icon(Icons.home),
+                  title: Text("Home"),
+                  selectedColor: primarycolor,
+                ),
 
-          SalomonBottomBarItem(
-            icon: Icon(Icons.list),
-            title: Text("List"),
-            selectedColor: primarycolor,
-          ),
-          SalomonBottomBarItem(
-            icon: Icon(Icons.person),
-            title: Text("Dashboar"),
-            selectedColor: primarycolor,
-          ),
-        ],
+                SalomonBottomBarItem(
+                  icon: Icon(Icons.list),
+                  title: Text("List"),
+                  selectedColor: primarycolor,
+                ),
+                SalomonBottomBarItem(
+                  icon: Icon(Icons.person),
+                  title: Text("Dashboard"),
+                  selectedColor: primarycolor,
+                ),
+              ]
+            : [
+                //icon FAQ
+                SalomonBottomBarItem(
+                  icon: Icon(Icons.question_answer),
+                  title: Text("Panduan"),
+                  selectedColor: primarycolor,
+                ),
+                //icon Home
+                SalomonBottomBarItem(
+                  icon: Icon(Icons.home),
+                  title: Text("Home"),
+                  selectedColor: primarycolor,
+                ),
+
+                SalomonBottomBarItem(
+                  icon: Icon(Icons.list),
+                  title: Text("List"),
+                  selectedColor: primarycolor,
+                ),
+              ],
       ),
       body: pageTujuan[klik],
     );

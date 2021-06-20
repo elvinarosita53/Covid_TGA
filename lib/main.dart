@@ -5,6 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:menu_login/main_page.dart';
 import 'package:menu_login/page/page_dashboard.dart';
 import 'package:menu_login/page/page_getStart.dart';
+import 'package:menu_login/page/page_login.dart';
+import 'package:menu_login/page/page_profil.dart';
+import 'package:menu_login/page/page_resetPassword.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized(); //add this line code
@@ -22,7 +25,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: [
         const Locale('id'), // Indonesia, no country code
       ],
-      home: PageGetStart(),
+      home: PageProfil(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: GoogleFonts.montserratTextTheme(),

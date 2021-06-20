@@ -61,11 +61,11 @@ class PageGetStart extends StatelessWidget {
                         ),
                         TigaM(
                           judul: "Mencuci \nTangan",
-                          gambar: "images/jabat_tangan.png",
+                          gambar: "images/cuci tangan.png",
                         ),
                         TigaM(
                           judul: "Menjaga \nJarak",
-                          gambar: "images/jaga_jarak.png",
+                          gambar: "images/jaga jarak.png",
                         ),
                       ],
                     ),
@@ -77,16 +77,16 @@ class PageGetStart extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TigaM(
-                          judul: "Memakai \nMasker",
-                          gambar: "images/memakai masker.png",
+                          judul: "Gunakan \nSabun",
+                          gambar: "images/sabun.png",
                         ),
                         TigaM(
-                          judul: "Mencuci \nTangan",
-                          gambar: "images/jabat_tangan.png",
+                          judul: "Tidak\nBersentuhan",
+                          gambar: "images/jabat tangan.png",
                         ),
                         TigaM(
-                          judul: "Menjaga \nJarak",
-                          gambar: "images/jaga_jarak.png",
+                          judul: "Gunakan \nHandsanitizer",
+                          gambar: "images/handsanitizer.png",
                         ),
                       ],
                     ),
@@ -156,12 +156,12 @@ class TigaM extends StatelessWidget {
       children: [
         Image(
           height: MediaQuery.of(context).size.width / 3 - 50,
-          width: MediaQuery.of(context).size.width / 3 - 50,
-          fit: BoxFit.cover,
+          // width: MediaQuery.of(context).size.width / 3 - 50,
+          fit: BoxFit.fill,
           image: AssetImage(gambar),
         ),
         Container(
-          width: MediaQuery.of(context).size.width / 3 - 50,
+          width: MediaQuery.of(context).size.width / 3 - 35,
           // color: Colors.amber,
 
           child: Text(
