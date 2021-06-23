@@ -54,7 +54,7 @@ class _PageLoginState extends State<PageLogin> {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage(
-                          "images/bapak.png",
+                          "images/petugas.png",
                         ),
                       ),
                       color: primarycolor,
