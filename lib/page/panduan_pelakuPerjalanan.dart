@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:menu_login/template/tamplate_panduan.dart';
+import 'package:menu_login/template/tamplate_panduan.dart';
 
 class PanduanPelakuPerjalana extends StatelessWidget {
   @override

@@ -102,11 +102,11 @@ Color secondarycolor = Colors.blue[200];
 Color primarySearchColor = Colors.white.withOpacity(0.2);
 
 String judulPanduan =
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores tempora reprehenderit debitis quo culpa nesciunt est aut, vitae quos voluptas?";
+    "Berikut Penjelasan Setiap Kasus yang Terdefinsi dalam Kasus \nCOVID-19";
 
 //untuk list panduang covid
 List<Map> dataPanduan = [
-  {'warna': Colors.orange, 'kasus': "KASUS SUSPEK", 'penjelasan': ""},
+  {'warna': Colors.orange, 'kasus': "KASUS SUSPEK"},
   {'warna': Colors.yellow, 'kasus': "KASUS PROBABLE"},
   {'warna': Colors.green, 'kasus': "KASUS KONFIRMASI"},
   {'warna': Colors.pink, 'kasus': "KONTAK ERAT"},
