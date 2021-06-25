@@ -79,19 +79,19 @@ List<String> kecamatan = [
 ];
 
 List<String> keterangans = [
-  "JUMLAH OPD SELESAI PANTAU",
-  "JUMLAH PDP SEHAT",
-  "JUMLAH SUSPEK",
-  "SUSPEK DIRAWAT",
-  "SUSPEK ISOLASI MANDIRI",
-  "SUSPEK TERKONFIRMASI",
-  "DISCARDED",
-  "SUSPEK MENINGGAL/PROBABEL",
-  "JUMLAH KASUS KONFIRMASI",
-  "KONFIRMASI DIRAWAT",
-  "KONFIRMASI ISOLASI MANDIRI",
-  "KONFORMASI SEMBUH",
-  "KONFORMASI MENINGGAL"
+  "Jumlah OPD Selesai Pantau",
+  "Jumlah PDP Sehat",
+  "Jumlah Suspek",
+  "Suspek Dirawat",
+  "Suspek Isolasi Mandiri",
+  "Suspek Terkonfirmasi",
+  "Discarded",
+  "Suspek Meninggal/Probable",
+  "Jumlah Kasus Konfirmasi",
+  "Konfirmasi Dirawat",
+  "Konfirmasi Isolasi Mandiri",
+  "Konfirmasi Sembuh",
+  "Konfirmasi Meninggal"
 ];
 
 Color primarycolor = Color(0xff0C253A);

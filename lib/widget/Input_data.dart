@@ -1,35 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 
-class InputData extends StatelessWidget {
+class InputData extends StatefulWidget {
+  final Function(String) onChange;
   final String nama;
   final String hintText;
   final TextEditingController controlerinputdata;
 
   const InputData({
-    @required this.nama,
+    this.nama,
     @required this.hintText,
     @required this.controlerinputdata,
+    this.onChange,
   });
+
+  @override
+  _InputDataState createState() => _InputDataState();
+}
+
+class _InputDataState extends State<InputData> {
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          nama,
-          style: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.bold,
+        (widget.nama == null)
+            ? SizedBox()
+            : Text(
+                widget.nama ?? "",
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+        TextFormField(
+          validator: MultiValidator(
+            [
+              RequiredValidator(errorText: "Harap diisi"),
+            ],
           ),
-        ),
-        TextField(
-          controller: controlerinputdata,
+          controller: widget.controlerinputdata,
           decoration: InputDecoration(
             // contentPadding: EdgeInsets.symmetric(horizontal: 10),
             isDense: true,
-            hintText: hintText,
+            hintText: widget.hintText,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
           ),
+          onChanged: widget.onChange,
         ),
         SizedBox(
           height: 10,

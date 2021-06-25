@@ -3,21 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:menu_login/main_page.dart';
-import 'package:menu_login/page/page_dashboard.dart';
+import 'package:menu_login/page/page_formInput.dart';
 import 'package:menu_login/page/page_getStart.dart';
-import 'package:menu_login/page/page_login.dart';
 import 'package:menu_login/page/page_panduan.dart';
-import 'package:menu_login/page/panduan_KasusSuspek.dart';
-import 'package:menu_login/page/page_profil.dart';
-import 'package:menu_login/page/page_resetPassword.dart';
-import 'package:menu_login/page/panduan_KasusProbable.dart';
-import 'package:menu_login/page/panduan_KontakErat.dart';
-import 'package:menu_login/page/panduan_discarded.dart';
-import 'package:menu_login/page/panduan_kasusKonfirmasi.dart';
-import 'package:menu_login/page/panduan_kematian.dart';
-import 'package:menu_login/page/panduan_pelakuPerjalanan.dart';
-import 'package:menu_login/page/panduan_selesaiIsolasi.dart';
-import 'package:menu_login/template/tamplate_panduan.dart';
+import 'package:menu_login/page/page_resetAwal.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized(); //add this line code
@@ -35,7 +24,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: [
         const Locale('id'), // Indonesia, no country code
       ],
-      home: PagePanduan(),
+      home: PageResetAwal(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         textTheme: GoogleFonts.montserratTextTheme(),

@@ -52,18 +52,18 @@ class _MainPageState extends State<MainPage> {
                 //icon Home
                 SalomonBottomBarItem(
                   icon: Icon(Icons.home),
-                  title: Text("Home"),
+                  title: Text("Beranda"),
                   selectedColor: primarycolor,
                 ),
 
                 SalomonBottomBarItem(
                   icon: Icon(Icons.list),
-                  title: Text("List"),
+                  title: Text("Daftar"),
                   selectedColor: primarycolor,
                 ),
                 SalomonBottomBarItem(
                   icon: Icon(Icons.person),
-                  title: Text("Dashboard"),
+                  title: Text("Admin"),
                   selectedColor: primarycolor,
                 ),
               ]
@@ -77,13 +77,13 @@ class _MainPageState extends State<MainPage> {
                 //icon Home
                 SalomonBottomBarItem(
                   icon: Icon(Icons.home),
-                  title: Text("Home"),
+                  title: Text("Beranda"),
                   selectedColor: primarycolor,
                 ),
 
                 SalomonBottomBarItem(
                   icon: Icon(Icons.list),
-                  title: Text("List"),
+                  title: Text("Daftar"),
                   selectedColor: primarycolor,
                 ),
               ],

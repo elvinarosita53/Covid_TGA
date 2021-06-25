@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:menu_login/main_page.dart';
-import 'package:menu_login/page/page_profil.dart';
+import 'package:menu_login/page/page_resetAwal.dart';
 import 'package:menu_login/page/page_resetPassword.dart';
 import 'package:menu_login/widget/constant.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -65,14 +65,16 @@ class _PageLoginState extends State<PageLogin> {
                   ),
                 ],
               ),
+              //NOTE untuk validasi
               Form(
                 key: formkey,
                 child: Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      //NOTE menggunakan textformfield dalam melakukan validasi from
+
                       TextFormField(
                         validator: MultiValidator(
                           [
@@ -126,9 +128,7 @@ class _PageLoginState extends State<PageLogin> {
                           if (formkey.currentState.validate()) {
                             isLoading = true;
                             setState(() {});
-                            // print("diklik");
-                            // print("email ${contorllerEmail.text}");
-                            // print("password ${controllerPassword.text}");
+
                             try {
                               UserCredential userCredential = await FirebaseAuth
                                   .instance
@@ -139,13 +139,13 @@ class _PageLoginState extends State<PageLogin> {
                                 msg: "Anda Berhasil Login",
                                 backgroundColor: Colors.green[300],
                               );
-                              print("${userCredential.user}");
+
                               setState(() {
                                 isLoading = false;
                               });
 
                               FirebaseFirestore.instance
-                                  .collection('data_user')
+                                  .collection('data_profil')
                                   .doc(auth.currentUser.uid)
                                   .get()
                                   .then(
@@ -162,7 +162,7 @@ class _PageLoginState extends State<PageLogin> {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => PageProfil(),
+                                        builder: (context) => PageResetAwal(),
                                       ),
                                     );
                                   }

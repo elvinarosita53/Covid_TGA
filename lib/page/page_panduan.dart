@@ -4,6 +4,14 @@ import 'package:flutter/rendering.dart';
 import 'package:menu_login/main_page.dart';
 import 'package:menu_login/page/page_dashboard.dart';
 import 'package:menu_login/page/page_login.dart';
+import 'package:menu_login/panduan/panduan_KasusProbable.dart';
+import 'package:menu_login/panduan/panduan_KasusSuspek.dart';
+import 'package:menu_login/panduan/panduan_KontakErat.dart';
+import 'package:menu_login/panduan/panduan_discarded.dart';
+import 'package:menu_login/panduan/panduan_kasusKonfirmasi.dart';
+import 'package:menu_login/panduan/panduan_kematian.dart';
+import 'package:menu_login/panduan/panduan_pelakuPerjalanan.dart';
+import 'package:menu_login/panduan/panduan_selesaiIsolasi.dart';
 import 'package:menu_login/widget/constant.dart';
 import 'package:menu_login/widget/infoPanduan.dart';
 
@@ -17,6 +25,16 @@ class _PagePanduanState extends State<PagePanduan> {
 
   @override
   Widget build(BuildContext context) {
+    List panduanPage = [
+      PanduanKasusSuspek(),
+      PanduanKasusProbable(),
+      PanduanKasusKonfirmasi(),
+      PanduanKontakErat(),
+      PanduanPelakuPerjalana(),
+      PanduanDiscarded(),
+      PanduanSelesaiIsolasi(),
+      PanduanKematian(),
+    ];
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -115,17 +133,23 @@ class _PagePanduanState extends State<PagePanduan> {
                 ),
                 color: Colors.white,
               ),
-              child: SingleChildScrollView(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: dataPanduan
-                        .map(
-                          (perItem) => InfoPanduan(
-                            judulPanduan: perItem['kasus'],
-                          ),
-                        )
-                        .toList()),
+              child: ListView.builder(
+                itemCount: dataPanduan.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => panduanPage[index],
+                        ),
+                      );
+                    },
+                    child: InfoPanduan(
+                      judulPanduan: dataPanduan[index]['kasus'],
+                    ),
+                  );
+                },
               ),
             ),
           )

@@ -14,6 +14,7 @@ class PageListAdmin extends StatefulWidget {
 
 class _PageListAdminState extends State<PageListAdmin> {
   String currentpilih;
+  ScrollController controller = ScrollController();
 
   List dataCovid;
   CollectionReference backendFirebase =
@@ -103,6 +104,7 @@ class _PageListAdminState extends State<PageListAdmin> {
                   //listview.builder agar jumlah data sama dgn yg di inputkan secara otomatis
                   return ListView.builder(
                     //untuk perulangan jumlah data covid
+                    controller: controller,
                     itemCount: dataCovid.length,
                     itemBuilder: (context, index) {
                       if (dataCovid != null) {
