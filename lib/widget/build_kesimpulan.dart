@@ -1,10 +1,18 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:intl/intl.dart';
+import 'package:menu_login/page/page_detailKesimpulan.dart';
 import 'package:menu_login/widget/cardKesimpulan.dart';
 import 'package:menu_login/widget/constant.dart';
 
 class BuildKesimpulan extends StatelessWidget {
+  Map<String, Map> kasusPerBulan;
+
+  List dataTanggal;
+  List<String> dataBulan;
   List dataCovid;
   Map<String, Map> kasusPerTahun;
   List dataKecamatan;
@@ -43,6 +51,7 @@ class BuildKesimpulan extends StatelessWidget {
                   if (snapshot.hasData) {
                     setAwalDataKecamatan();
                     setAwalDataUsia();
+
                     //NOTE ambil data d database
                     dataCovid = snapshot.data.docs
                         .map((perItem) => perItem.data())
@@ -54,7 +63,7 @@ class BuildKesimpulan extends StatelessWidget {
                         .toList();
                     // NOTE diolah datany
                     // chek keterangan per kecamatan
-                    print("data kecamatan $dataKecamatan");
+
                     for (var i = 0; i < dataKecamatan.length; i++) {
                       switch (dataKecamatan[i]) {
                         case 'Kecamatan Bate':
@@ -218,8 +227,6 @@ class BuildKesimpulan extends StatelessWidget {
                         maxKecamatanMeninggal = key;
                       }
                     });
-                    print("data per kasus $kasusPerKecamatan");
-                    print("data baru Kecamatan: $dataBaruKecamatan");
 
                     // ini untuk pengolahan data usia positf dan meninggal
                     kasusPerTahun.forEach(
@@ -244,42 +251,231 @@ class BuildKesimpulan extends StatelessWidget {
                         }
                       },
                     );
+//NOTE start bulan
+                    setAwalDataKasus();
+                    // NOTE ambil data d database
+                    dataCovid = snapshot.data.docs
+                        .map((perItem) => perItem.data())
+                        .toList();
+                    print('dataCovid : $dataCovid');
 
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          width: MediaQuery.of(context).size.width,
-                          color: primarycolor,
-                          child: Text(
-                            "Kesimpulan Grafik",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                    dataTanggal =
+                        dataCovid.map((e) => e['tgl awal gejala']).toList();
+
+                    // print('dataTAngga : $dataTanggal');
+
+                    dataBulan = dataTanggal.map((perItem) {
+                      DateTime perBulan = DateFormat.yMd('id').parse(perItem);
+                      String bulanPerdata = DateFormat.M().format(perBulan);
+
+                      //ambil data bulannya aja
+                      return bulanPerdata;
+                    }).toList();
+                    // print("databulan = $dataBulan");
+
+                    // NOTE diolah datanya
+                    // chek ketranga per bulan
+
+                    for (var i = 0; i < dataBulan.length; i++) {
+                      switch (dataBulan[i]) {
+                        case '1':
+                          filterKeterangan('januari', dataCovid[i]);
+                          break;
+                        case '2':
+                          filterKeterangan('februari', dataCovid[i]);
+                          break;
+                        case '3':
+                          filterKeterangan('maret', dataCovid[i]);
+                          break;
+                        case '4':
+                          filterKeterangan('april', dataCovid[i]);
+                          break;
+                        case '5':
+                          filterKeterangan('mei', dataCovid[i]);
+                          break;
+                        case '6':
+                          filterKeterangan('juni', dataCovid[i]);
+                          break;
+                        case '7':
+                          filterKeterangan('juli', dataCovid[i]);
+                          break;
+                        case '8':
+                          filterKeterangan('agustus', dataCovid[i]);
+                          break;
+                        case '9':
+                          filterKeterangan('september', dataCovid[i]);
+                          break;
+                        case '10':
+                          filterKeterangan('oktober', dataCovid[i]);
+                          break;
+                        case '11':
+                          filterKeterangan('november', dataCovid[i]);
+                          break;
+                        case '12':
+                          filterKeterangan('desember', dataCovid[i]);
+                          break;
+                        default:
+                      }
+                    }
+
+                    // print("kasus perbulan : $kasusPerBulan");
+
+                    Map dataBaru = {
+                      'januari': {},
+                      'februari': {},
+                      'maret': {},
+                      'april': {},
+                      'mei': {},
+                      'juni': {},
+                      'juli': {},
+                      'agustus': {},
+                      'september': {},
+                      'oktober': {},
+                      'november': {},
+                      'desember': {},
+                    };
+                    // forEach itu untuk akses stiap data pada data map.
+                    double max = 0;
+                    kasusPerBulan.forEach((key, value) {
+                      print("key : $key");
+                      print("value : $value");
+                      // data['asdfasdf'] = 2;
+
+                      dataBaru[key]['positif'] =
+                          value['Jumlah Kasus Konfirmasi'];
+
+                      dataBaru[key]['sembuh'] = value['Jumlah PDP Sehat'] +
+                          value['Discarded'] +
+                          value['Konfirmasi Sembuh'];
+                      dataBaru[key]['meninggal'] =
+                          value['Konfirmasi Meninggal'] +
+                              value['Suspek Meninggal/Probable'];
+                      dataBaru[key]['dirawat'] = value['Konfirmasi Dirawat'];
+
+                      dataBaru[key]['tersuspek'] = value['Jumlah Suspek'] +
+                          value['Suspek Dirawat'] +
+                          value['Suspek Isolasi Mandiri'] +
+                          value['Suspek Terkonfirmasi'] +
+                          value['Konfirmasi Isolasi Mandiri'] +
+                          value['Jumlah ODP Selesai Pantau'];
+
+                      if (max < dataBaru[key]['positif']) {
+                        max = dataBaru[key]['positif'].toDouble();
+                      }
+                      if (max < dataBaru[key]['sembuh']) {
+                        max = dataBaru[key]['sembuh'].toDouble();
+                      }
+                      if (max < dataBaru[key]['meninggal']) {
+                        max = dataBaru[key]['meninggal'].toDouble();
+                      }
+                      if (max < dataBaru[key]['dirawat']) {
+                        max = dataBaru[key]['dirawat'].toDouble();
+                      }
+                      if (max < dataBaru[key]['tersuspek']) {
+                        max = dataBaru[key]['tersuspek'].toDouble();
+                      }
+                    });
+                    print("kasus bulan $dataBaru");
+                    //NOTE nilai rata-rata
+                    Map<String, double> rataRata = {
+                      'positif': 0.0,
+                      'sembuh': 0.0,
+                      'meninggal': 0.0,
+                      'dirawat': 0.0,
+                      'tersuspek': 0.0,
+                    };
+
+                    dataBaru.forEach((key, value) {
+                      rataRata['positif'] =
+                          (rataRata['positif'] + value['positif']) / 12;
+                      rataRata['sembuh'] =
+                          (rataRata['sembuh'] + value['sembuh']) / 12;
+                      rataRata['meninggal'] =
+                          (rataRata['meninggal'] + value['meninggal']) / 12;
+                      rataRata['dirawat'] =
+                          (rataRata['dirawat'] + value['dirawat']) / 12;
+                      rataRata['tersuspek'] =
+                          (rataRata['tersuspek'] + value['tersuspek']) / 12;
+                    });
+
+                    // NOTE nilai Standart deviasi
+                    Map<String, double> varianKasus = {
+                      'positif': 0.0,
+                      'sembuh': 0.0,
+                      'meninggal': 0.0,
+                      'dirawat': 0.0,
+                      'tersuspek': 0.0,
+                    };
+                    dataBaru.forEach((key, value) {
+                      varianKasus['positif'] = varianKasus['positif'] +
+                          pow((value['positif'] - rataRata['positif']), 2) / 11;
+                      varianKasus['sembuh'] = varianKasus['sembuh'] +
+                          pow((value['sembuh'] - rataRata['sembuh']), 2) / 11;
+                      varianKasus['meninggal'] = varianKasus['meninggal'] +
+                          pow((value['meninggal'] - rataRata['meninggal']), 2) /
+                              11;
+                      varianKasus['dirawat'] = varianKasus['dirawat'] +
+                          pow((value['dirawat'] - rataRata['dirawat']), 2) / 11;
+                      varianKasus['tersuspek'] = varianKasus['tersuspek'] +
+                          pow((value['tersuspek'] - rataRata['tersuspek']), 2) /
+                              11;
+                    });
+//NOTE end bulan
+                    return SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Container(
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.symmetric(vertical: 10),
+                            width: MediaQuery.of(context).size.width,
+                            color: primarycolor,
+                            child: Text(
+                              "Kesimpulan Grafik",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
                           ),
-                        ),
-                        CardKesimpulan(
-                          judulTextKesimpulan: "Meninggal Terbanyak:",
-                          kesimpulanKasus: maxKecamatanMeninggal,
-                          total: maxMeninggal,
-                        ),
-                        CardKesimpulan(
-                          judulTextKesimpulan: "Positif Tertinggi:",
-                          kesimpulanKasus: maxKecamatanPositif,
-                          total: maxPositif,
-                        ),
-                        CardKesimpulan(
-                          judulTextKesimpulan: " Usia Rentan Positif:",
-                          kesimpulanKasus: 'Usia $maxUsiaPositif Tahun',
-                        ),
-                        CardKesimpulan(
-                          judulTextKesimpulan: "Usia Yang Rentan Meninggal:",
-                          kesimpulanKasus: 'Usia $maxusiaMeninggal Tahun',
-                        ),
-                      ],
+                          CardKesimpulan(
+                            judulTextKesimpulan: "Meninggal Terbanyak:",
+                            kesimpulanKasus: maxKecamatanMeninggal,
+                            total: maxMeninggal,
+                          ),
+                          CardKesimpulan(
+                            judulTextKesimpulan: "Positif Tertinggi:",
+                            kesimpulanKasus: maxKecamatanPositif,
+                            total: maxPositif,
+                          ),
+                          CardKesimpulan(
+                            judulTextKesimpulan: " Usia Rentan Positif:",
+                            kesimpulanKasus: 'Usia $maxUsiaPositif Tahun',
+                          ),
+                          CardKesimpulan(
+                            judulTextKesimpulan: "Usia Yang Rentan Meninggal:",
+                            kesimpulanKasus: 'Usia $maxusiaMeninggal Tahun',
+                          ),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => PageDetailKesimpulan(
+                                      maxKecamatanMeninggal:
+                                          maxKecamatanMeninggal,
+                                      maxMeninggal: maxMeninggal,
+                                      maxKecamatanPositif: maxKecamatanPositif,
+                                      maxPositif: maxPositif,
+                                      maxUsiaPositif: maxUsiaPositif,
+                                      maxusiaMeninggal: maxusiaMeninggal,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Text("Lainnya"))
+                        ],
+                      ),
                     );
                   } else {
                     return SpinKitFadingFour(
@@ -928,5 +1124,279 @@ class BuildKesimpulan extends StatelessWidget {
     } else if (perItem['keterangan'] == "Konfirmasi Meninggal") {
       kasusPerTahun[tahun]["Konfirmasi Meninggal"]++;
     }
+  }
+
+  //metod untuk filter keterangan saat penambahan data berdasarkan keterangan kasus
+  void filterKeterangan(String bulan, Map perItem) {
+    if (perItem['keterangan'] == "PDP") {
+      kasusPerBulan[bulan]['PDP']++;
+      //
+    } else if (perItem['keterangan'] == "ODP") {
+      kasusPerBulan[bulan]['ODP']++;
+      //
+    } else if (perItem['keterangan'] == "OTG") {
+      kasusPerBulan[bulan]['OTG']++;
+      //
+    } else if (perItem['keterangan'] == "Jumlah ODP Selesai Pantau") {
+      kasusPerBulan[bulan]['Jumlah ODP Selesai Pantau']++;
+      //
+    } else if (perItem['keterangan'] == "Jumlah PDP Sehat") {
+      kasusPerBulan[bulan]['Jumlah PDP Sehat']++;
+      //
+    } else if (perItem['keterangan'] == "Jumlah Suspek") {
+      kasusPerBulan[bulan]['Jumlah Suspek']++;
+      //
+    } else if (perItem['keterangan'] == "Suspek Dirawat") {
+      kasusPerBulan[bulan]['Suspek Dirawat']++;
+      //
+    } else if (perItem['keterangan'] == "Suspek Isolasi Mandiri") {
+      kasusPerBulan[bulan]['Suspek Isolasi Mandiri']++;
+      //
+    } else if (perItem['keterangan'] == "Suspek Terkonfirmasi") {
+      kasusPerBulan[bulan]['Suspek Terkonfirmasi']++;
+      //
+    } else if (perItem['keterangan'] == "Discarded") {
+      kasusPerBulan[bulan]["Discarded"]++;
+      //
+    } else if (perItem['keterangan'] == "Suspek Meninggal/Probable") {
+      kasusPerBulan[bulan]["Suspek Meninggal/Probable"]++;
+      //
+    } else if (perItem['keterangan'] == "Jumlah Kasus Konfirmasi") {
+      kasusPerBulan[bulan]["Jumlah Kasus Konfirmasi"]++;
+      //
+    } else if (perItem['keterangan'] == "Konfirmasi Dirawat") {
+      kasusPerBulan[bulan]["Konfirmasi Dirawat"]++;
+      //
+    } else if (perItem['keterangan'] == "Konfirmasi Isolasi Mandiri") {
+      kasusPerBulan[bulan]["Konfirmasi Isolasi Mandiri"]++;
+      //
+    } else if (perItem['keterangan'] == "Konfirmasi Sembuh") {
+      kasusPerBulan[bulan]["Konfirmasi Sembuh"]++;
+      //
+    } else if (perItem['keterangan'] == "Konfirmasi Meninggal") {
+      kasusPerBulan[bulan]["Konfirmasi Meninggal"]++;
+    }
+  }
+
+//metode untuk seting data kasus agar penambahannya kembali ke awal
+  void setAwalDataKasus() {
+    kasusPerBulan = {
+      'januari': {
+        'PDP': 0,
+        'ODP': 0,
+        'OTG': 0,
+        'Jumlah ODP Selesai Pantau': 0,
+        'Jumlah Suspek': 0,
+        'Suspek Dirawat': 0,
+        'Suspek Isolasi Mandiri': 0,
+        'Suspek Terkonfirmasi': 0,
+        'Konfirmasi Isolasi Mandiri': 0,
+        'Jumlah PDP Sehat': 0,
+        'Discarded': 0,
+        'Konfirmasi Sembuh': 0,
+        'Konfirmasi Meninggal': 0,
+        'Suspek Meninggal/Probable': 0,
+        'Konfirmasi Dirawat': 0,
+        'Jumlah Kasus Konfirmasi': 0,
+      },
+      'februari': {
+        'PDP': 0,
+        'ODP': 0,
+        'OTG': 0,
+        'Jumlah ODP Selesai Pantau': 0,
+        'Jumlah Suspek': 0,
+        'Suspek Dirawat': 0,
+        'Suspek Isolasi Mandiri': 0,
+        'Suspek Terkonfirmasi': 0,
+        'Konfirmasi Isolasi Mandiri': 0,
+        'Jumlah PDP Sehat': 0,
+        'Discarded': 0,
+        'Konfirmasi Sembuh': 0,
+        'Konfirmasi Meninggal': 0,
+        'Suspek Meninggal/Probable': 0,
+        'Konfirmasi Dirawat': 0,
+        'Jumlah Kasus Konfirmasi': 0,
+      },
+      'maret': {
+        'PDP': 0,
+        'ODP': 0,
+        'OTG': 0,
+        'Jumlah ODP Selesai Pantau': 0,
+        'Jumlah Suspek': 0,
+        'Suspek Dirawat': 0,
+        'Suspek Isolasi Mandiri': 0,
+        'Suspek Terkonfirmasi': 0,
+        'Konfirmasi Isolasi Mandiri': 0,
+        'Jumlah PDP Sehat': 0,
+        'Discarded': 0,
+        'Konfirmasi Sembuh': 0,
+        'Konfirmasi Meninggal': 0,
+        'Suspek Meninggal/Probable': 0,
+        'Konfirmasi Dirawat': 0,
+        'Jumlah Kasus Konfirmasi': 0,
+      },
+      'april': {
+        'PDP': 0,
+        'ODP': 0,
+        'OTG': 0,
+        'Jumlah ODP Selesai Pantau': 0,
+        'Jumlah Suspek': 0,
+        'Suspek Dirawat': 0,
+        'Suspek Isolasi Mandiri': 0,
+        'Suspek Terkonfirmasi': 0,
+        'Konfirmasi Isolasi Mandiri': 0,
+        'Jumlah PDP Sehat': 0,
+        'Discarded': 0,
+        'Konfirmasi Sembuh': 0,
+        'Konfirmasi Meninggal': 0,
+        'Suspek Meninggal/Probable': 0,
+        'Konfirmasi Dirawat': 0,
+        'Jumlah Kasus Konfirmasi': 0,
+      },
+      'mei': {
+        'PDP': 0,
+        'ODP': 0,
+        'OTG': 0,
+        'Jumlah ODP Selesai Pantau': 0,
+        'Jumlah Suspek': 0,
+        'Suspek Dirawat': 0,
+        'Suspek Isolasi Mandiri': 0,
+        'Suspek Terkonfirmasi': 0,
+        'Konfirmasi Isolasi Mandiri': 0,
+        'Jumlah PDP Sehat': 0,
+        'Discarded': 0,
+        'Konfirmasi Sembuh': 0,
+        'Konfirmasi Meninggal': 0,
+        'Suspek Meninggal/Probable': 0,
+        'Konfirmasi Dirawat': 0,
+        'Jumlah Kasus Konfirmasi': 0,
+      },
+      'juni': {
+        'PDP': 0,
+        'ODP': 0,
+        'OTG': 0,
+        'Jumlah ODP Selesai Pantau': 0,
+        'Jumlah Suspek': 0,
+        'Suspek Dirawat': 0,
+        'Suspek Isolasi Mandiri': 0,
+        'Suspek Terkonfirmasi': 0,
+        'Konfirmasi Isolasi Mandiri': 0,
+        'Jumlah PDP Sehat': 0,
+        'Discarded': 0,
+        'Konfirmasi Sembuh': 0,
+        'Konfirmasi Meninggal': 0,
+        'Suspek Meninggal/Probable': 0,
+        'Konfirmasi Dirawat': 0,
+        'Jumlah Kasus Konfirmasi': 0,
+      },
+      'juli': {
+        'PDP': 0,
+        'ODP': 0,
+        'OTG': 0,
+        'Jumlah ODP Selesai Pantau': 0,
+        'Jumlah Suspek': 0,
+        'Suspek Dirawat': 0,
+        'Suspek Isolasi Mandiri': 0,
+        'Suspek Terkonfirmasi': 0,
+        'Konfirmasi Isolasi Mandiri': 0,
+        'Jumlah PDP Sehat': 0,
+        'Discarded': 0,
+        'Konfirmasi Sembuh': 0,
+        'Konfirmasi Meninggal': 0,
+        'Suspek Meninggal/Probable': 0,
+        'Konfirmasi Dirawat': 0,
+        'Jumlah Kasus Konfirmasi': 0,
+      },
+      'agustus': {
+        'PDP': 0,
+        'ODP': 0,
+        'OTG': 0,
+        'Jumlah ODP Selesai Pantau': 0,
+        'Jumlah Suspek': 0,
+        'Suspek Dirawat': 0,
+        'Suspek Isolasi Mandiri': 0,
+        'Suspek Terkonfirmasi': 0,
+        'Konfirmasi Isolasi Mandiri': 0,
+        'Jumlah PDP Sehat': 0,
+        'Discarded': 0,
+        'Konfirmasi Sembuh': 0,
+        'Konfirmasi Meninggal': 0,
+        'Suspek Meninggal/Probable': 0,
+        'Konfirmasi Dirawat': 0,
+        'Jumlah Kasus Konfirmasi': 0,
+      },
+      'september': {
+        'PDP': 0,
+        'ODP': 0,
+        'OTG': 0,
+        'Jumlah ODP Selesai Pantau': 0,
+        'Jumlah Suspek': 0,
+        'Suspek Dirawat': 0,
+        'Suspek Isolasi Mandiri': 0,
+        'Suspek Terkonfirmasi': 0,
+        'Konfirmasi Isolasi Mandiri': 0,
+        'Jumlah PDP Sehat': 0,
+        'Discarded': 0,
+        'Konfirmasi Sembuh': 0,
+        'Konfirmasi Meninggal': 0,
+        'Suspek Meninggal/Probable': 0,
+        'Konfirmasi Dirawat': 0,
+        'Jumlah Kasus Konfirmasi': 0,
+      },
+      'oktober': {
+        'PDP': 0,
+        'ODP': 0,
+        'OTG': 0,
+        'Jumlah ODP Selesai Pantau': 0,
+        'Jumlah Suspek': 0,
+        'Suspek Dirawat': 0,
+        'Suspek Isolasi Mandiri': 0,
+        'Suspek Terkonfirmasi': 0,
+        'Konfirmasi Isolasi Mandiri': 0,
+        'Jumlah PDP Sehat': 0,
+        'Discarded': 0,
+        'Konfirmasi Sembuh': 0,
+        'Konfirmasi Meninggal': 0,
+        'Suspek Meninggal/Probable': 0,
+        'Konfirmasi Dirawat': 0,
+        'Jumlah Kasus Konfirmasi': 0,
+      },
+      'november': {
+        'PDP': 0,
+        'ODP': 0,
+        'OTG': 0,
+        'Jumlah ODP Selesai Pantau': 0,
+        'Jumlah Suspek': 0,
+        'Suspek Dirawat': 0,
+        'Suspek Isolasi Mandiri': 0,
+        'Suspek Terkonfirmasi': 0,
+        'Konfirmasi Isolasi Mandiri': 0,
+        'Jumlah PDP Sehat': 0,
+        'Discarded': 0,
+        'Konfirmasi Sembuh': 0,
+        'Konfirmasi Meninggal': 0,
+        'Suspek Meninggal/Probable': 0,
+        'Konfirmasi Dirawat': 0,
+        'Jumlah Kasus Konfirmasi': 0,
+      },
+      'desember': {
+        'PDP': 0,
+        'ODP': 0,
+        'OTG': 0,
+        'Jumlah ODP Selesai Pantau': 0,
+        'Jumlah Suspek': 0,
+        'Suspek Dirawat': 0,
+        'Suspek Isolasi Mandiri': 0,
+        'Suspek Terkonfirmasi': 0,
+        'Konfirmasi Isolasi Mandiri': 0,
+        'Jumlah PDP Sehat': 0,
+        'Discarded': 0,
+        'Konfirmasi Sembuh': 0,
+        'Konfirmasi Meninggal': 0,
+        'Suspek Meninggal/Probable': 0,
+        'Konfirmasi Dirawat': 0,
+        'Jumlah Kasus Konfirmasi': 0,
+      },
+    };
   }
 }

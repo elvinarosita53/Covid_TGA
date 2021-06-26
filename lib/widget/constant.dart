@@ -52,7 +52,7 @@ LinearGradient kwarnagradien_tersuspect = LinearGradient(
 
 // hitungan 1-100
 var umurTahun = List.generate(100, (index) => index + 1);
-var umurBulan = List.generate(11, (index) => index + 1);
+var umurBulan = List.generate(12, (index) => index);
 List<String> kecamatan = [
   "Kecamatan Bate",
   "Kecamatan Delima",

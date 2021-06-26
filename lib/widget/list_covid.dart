@@ -3,13 +3,15 @@ import 'package:menu_login/page/page_formInput.dart';
 import 'package:menu_login/widget/constant.dart';
 
 class ListCovid extends StatefulWidget {
+  final String uplodedBy;
   final String nama;
   final String keterangan_kasus;
   final Function onHapus;
   final Function onFormInput;
 
   const ListCovid(
-      {this.nama = "Nama",
+      {this.uplodedBy,
+      this.nama = "Nama",
       this.keterangan_kasus = "Keterangan Kasus",
       this.onHapus,
       this.onFormInput});
@@ -58,6 +60,15 @@ class _ListCovidState extends State<ListCovid> {
                   widget.keterangan_kasus,
                   style: TextStyle(fontSize: 13, color: Colors.grey),
                 ),
+                (widget.uplodedBy == null)
+                    ? SizedBox()
+                    : SizedBox(
+                        width: MediaQuery.of(context).size.width - 80,
+                        child: Text(
+                          widget.uplodedBy ?? '',
+                          style: TextStyle(fontSize: 13, color: Colors.grey),
+                        ),
+                      ),
               ],
             ),
             IconButton(

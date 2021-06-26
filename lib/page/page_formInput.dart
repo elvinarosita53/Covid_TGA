@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -9,11 +10,11 @@ import 'package:menu_login/widget/Input_data.dart';
 import 'package:menu_login/widget/constant.dart';
 
 class PageFormInput extends StatefulWidget {
-  final String listID;
+  final String namaAsalUser;
   final Map dataCovid;
 
   const PageFormInput({
-    this.listID = "",
+    this.namaAsalUser = "",
     this.dataCovid,
   });
   @override
@@ -21,6 +22,7 @@ class PageFormInput extends StatefulWidget {
 }
 
 class _PageFormInputState extends State<PageFormInput> {
+  FirebaseAuth auth = FirebaseAuth.instance;
   bool isLoading = false;
   var formkey = GlobalKey<FormState>();
   String tglberangkat;
@@ -79,7 +81,7 @@ class _PageFormInputState extends State<PageFormInput> {
       appBar: AppBar(
         backgroundColor: primarycolor,
         //stiap statfull harus ada widget. apa gt
-        title: Text(widget.listID),
+        title: Text("Data Pasien"),
       ),
       body: Padding(
         padding: EdgeInsets.all(10),
@@ -268,6 +270,7 @@ class _PageFormInputState extends State<PageFormInput> {
                       nama: "Riwayat Perjalanan",
                       hintText: "Daerah/Negara",
                       controlerinputdata: daerah,
+                      isRequied: false,
                       onChange: (value) {
                         setState(() {});
                       },
@@ -464,6 +467,7 @@ class _PageFormInputState extends State<PageFormInput> {
                   : InputData(
                       hintText: "Catatan Tambahan",
                       controlerinputdata: catatanTambahan,
+                      isRequied: false,
                     ),
               (widget.dataCovid == null)
                   ? GestureDetector(
@@ -483,7 +487,10 @@ class _PageFormInputState extends State<PageFormInput> {
                         ),
                       ),
                       onTap: () async {
+                        print("diklik");
                         if (formkey.currentState.validate()) {
+                          print("validate");
+                          print(widget.namaAsalUser);
                           isLoading = true;
                           setState(() {});
                           // deklarasi firebase
@@ -510,6 +517,8 @@ class _PageFormInputState extends State<PageFormInput> {
                             'tata laksanan yang dilakukan': tataLaksana.text,
                             'keterangan': currentKeterangan,
                             'catatan tambahan': catatanTambahan.text,
+                            'uploded by id': auth.currentUser.uid,
+                            'uploded by nama': widget.namaAsalUser,
                           }).then((value) => Fluttertoast.showToast(
                               msg: "Berhasil di Tambahkan"));
                           nama.text = "";
@@ -527,7 +536,11 @@ class _PageFormInputState extends State<PageFormInput> {
                           tataLaksana.text = "";
                           currentKeterangan = null;
                           catatanTambahan.text = "";
+                          isLoading = false;
+                          setState(() {});
                           Navigator.pop(context);
+                        } else {
+                          print("not validate");
                         }
                       },
                     )
@@ -535,7 +548,7 @@ class _PageFormInputState extends State<PageFormInput> {
                       onTap: () async {
                         await FirebaseFirestore.instance
                             .collection("data_covid")
-                            .doc(widget.listID)
+                            .doc(widget.namaAsalUser)
                             .update({
                           'nama': nama.text,
                           'kecamatan': currentKecamatan,

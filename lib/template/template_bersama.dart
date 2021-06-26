@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:marquee/marquee.dart';
 import 'package:menu_login/main_page.dart';
 import 'package:menu_login/page/page_login.dart';
 import 'package:menu_login/page/page_dashboard.dart';
@@ -39,6 +40,8 @@ class _TemplateBersamaState extends State<TemplateBersama> {
               backgroundColor: primarycolor,
               title: Text(
                 widget.namaAppbar,
+                overflow: TextOverflow.ellipsis,
+                // maxLines: 2,
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 25,

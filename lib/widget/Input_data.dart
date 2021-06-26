@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
 class InputData extends StatefulWidget {
+  final bool isRequied;
   final Function(String) onChange;
   final String nama;
   final String hintText;
   final TextEditingController controlerinputdata;
 
   const InputData({
+    this.isRequied = true,
     this.nama,
     @required this.hintText,
     @required this.controlerinputdata,
@@ -34,11 +36,13 @@ class _InputDataState extends State<InputData> {
                 ),
               ),
         TextFormField(
-          validator: MultiValidator(
-            [
-              RequiredValidator(errorText: "Harap diisi"),
-            ],
-          ),
+          validator: (widget.isRequied)
+              ? MultiValidator(
+                  [
+                    RequiredValidator(errorText: "Harap diisi"),
+                  ],
+                )
+              : MultiValidator([]),
           controller: widget.controlerinputdata,
           decoration: InputDecoration(
             // contentPadding: EdgeInsets.symmetric(horizontal: 10),
