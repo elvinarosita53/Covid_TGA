@@ -8,9 +8,9 @@ class BuildChart extends StatelessWidget {
   final String currentKecamatan;
   BuildChart({this.currentKecamatan});
 
-  List dataTanggal;
-  List<String> dataBulan;
-  List dataCovid;
+  List dataTanggal = [];
+  List<String> dataBulan = [];
+  List dataCovid = [];
   CollectionReference backendLineBar =
       FirebaseFirestore.instance.collection('data_covid');
 
@@ -53,11 +53,11 @@ class BuildChart extends StatelessWidget {
               // print('dataTAngga : $dataTanggal');
 
               dataBulan = dataTanggal.map((perItem) {
-                DateTime perBulan = DateFormat.yMd('id').parse(perItem);
-                String bulanPerdata = DateFormat.M().format(perBulan);
-
-                //ambil data bulannya aja
-                return bulanPerdata;
+                if (perItem != null) {
+                  DateTime perBulan = DateFormat.yMd('id').parse(perItem);
+                  String bulanPerdata = DateFormat.M().format(perBulan);
+                  return bulanPerdata;
+                }
               }).toList();
               // print("databulan = $dataBulan");
 

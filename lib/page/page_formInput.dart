@@ -262,6 +262,7 @@ class _PageFormInputState extends State<PageFormInput> {
                 nama: "No.HP",
                 hintText: "Masukkan Nomor Telepon",
                 controlerinputdata: nohp,
+                isRequied: false,
               ),
               Row(
                 children: [
@@ -345,6 +346,7 @@ class _PageFormInputState extends State<PageFormInput> {
                     child: InputData(
                       nama: "Riwayat Sakit",
                       hintText: "Tanda dan Gejala",
+                      isRequied: false,
                       controlerinputdata: tandaGejala,
                       onChange: (value) {
                         setState(() {});
@@ -416,6 +418,7 @@ class _PageFormInputState extends State<PageFormInput> {
                 nama: "Kondisi Umum",
                 hintText: "Masukkan Kondisi Umum",
                 controlerinputdata: kondisiUmum,
+                isRequied: false,
               ),
               InputData(
                 nama: "Tata Laksana yang Dilakukan",

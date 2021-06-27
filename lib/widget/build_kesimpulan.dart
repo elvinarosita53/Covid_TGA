@@ -9,15 +9,14 @@ import 'package:menu_login/widget/cardKesimpulan.dart';
 import 'package:menu_login/widget/constant.dart';
 
 class BuildKesimpulan extends StatelessWidget {
-  Map<String, Map> kasusPerBulan;
-
-  List dataTanggal;
-  List<String> dataBulan;
-  List dataCovid;
-  Map<String, Map> kasusPerTahun;
-  List dataKecamatan;
-  List dataTahun;
-  Map<String, Map> kasusPerKecamatan;
+  Map<String, Map> kasusPerBulan = {};
+  List dataTanggal = [];
+  List<String> dataBulan = [];
+  List dataCovid = [];
+  Map<String, Map> kasusPerTahun = {};
+  List dataKecamatan = [];
+  List dataTahun = [];
+  Map<String, Map> kasusPerKecamatan = {};
   CollectionReference backendKesimpulan =
       FirebaseFirestore.instance.collection('data_covid');
 
@@ -104,6 +103,9 @@ class BuildKesimpulan extends StatelessWidget {
                         case "Kecamatan Mane":
                           filterKecamatan("Kecamatan Mane", dataCovid[i]);
                           break;
+                        case "Kecamatan Mila":
+                          filterKecamatan("Kecamatan Mila", dataCovid[i]);
+                          break;
                         case "Kecamatan Muara Tiga":
                           filterKecamatan("Kecamatan Muara Tiga", dataCovid[i]);
                           break;
@@ -178,6 +180,7 @@ class BuildKesimpulan extends StatelessWidget {
                       "Kecamatan Keumala": {},
                       "Kecamatan Kota Sigli": {},
                       "Kecamatan Mane": {},
+                      "Kecamatan Mila": {},
                       "Kecamatan Muara Tiga": {},
                       "Kecamatan Mutiara": {},
                       "Kecamatan Mutiara Timur": {},
@@ -265,11 +268,13 @@ class BuildKesimpulan extends StatelessWidget {
                     // print('dataTAngga : $dataTanggal');
 
                     dataBulan = dataTanggal.map((perItem) {
-                      DateTime perBulan = DateFormat.yMd('id').parse(perItem);
-                      String bulanPerdata = DateFormat.M().format(perBulan);
+                      if (perItem != null) {
+                        DateTime perBulan = DateFormat.yMd('id').parse(perItem);
+                        String bulanPerdata = DateFormat.M().format(perBulan);
+                        return bulanPerdata;
+                      }
 
                       //ambil data bulannya aja
-                      return bulanPerdata;
                     }).toList();
                     // print("databulan = $dataBulan");
 
@@ -433,7 +438,7 @@ class BuildKesimpulan extends StatelessWidget {
                             child: Text(
                               "Kesimpulan Grafik",
                               style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white),
                             ),
@@ -456,24 +461,30 @@ class BuildKesimpulan extends StatelessWidget {
                             judulTextKesimpulan: "Usia Yang Rentan Meninggal:",
                             kesimpulanKasus: 'Usia $maxusiaMeninggal Tahun',
                           ),
-                          TextButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => PageDetailKesimpulan(
-                                      maxKecamatanMeninggal:
-                                          maxKecamatanMeninggal,
-                                      maxMeninggal: maxMeninggal,
-                                      maxKecamatanPositif: maxKecamatanPositif,
-                                      maxPositif: maxPositif,
-                                      maxUsiaPositif: maxUsiaPositif,
-                                      maxusiaMeninggal: maxusiaMeninggal,
-                                    ),
+                          IconButton(
+                            padding: EdgeInsets.all(0),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => PageDetailKesimpulan(
+                                    maxKecamatanMeninggal:
+                                        maxKecamatanMeninggal,
+                                    maxMeninggal: maxMeninggal,
+                                    maxKecamatanPositif: maxKecamatanPositif,
+                                    maxPositif: maxPositif,
+                                    maxUsiaPositif: maxUsiaPositif,
+                                    maxusiaMeninggal: maxusiaMeninggal,
                                   ),
-                                );
-                              },
-                              child: Text("Lainnya"))
+                                ),
+                              );
+                            },
+                            icon: Icon(
+                              Icons.expand_more,
+                              color: primarycolor,
+                            ),
+                            iconSize: 30,
+                          )
                         ],
                       ),
                     );
@@ -493,14 +504,25 @@ class BuildKesimpulan extends StatelessWidget {
         child: Container(
           alignment: Alignment.center,
           margin: EdgeInsets.only(top: 15),
-          width: 200,
           height: 55,
           decoration: BoxDecoration(
               color: primarycolor, borderRadius: BorderRadius.circular(10)),
-          child: Text(
-            "Kesimpulan Grafik",
-            style: TextStyle(
-                fontSize: 17, fontWeight: FontWeight.bold, color: Colors.white),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Icon(
+                Icons.grading_sharp,
+                size: 20,
+                color: Colors.white,
+              ),
+              Text(
+                "Kesimpulan Grafik",
+                style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            ],
           ),
         ),
       ),
@@ -691,6 +713,24 @@ class BuildKesimpulan extends StatelessWidget {
         'Jumlah Kasus Konfirmasi': 0,
       },
       "Kecamatan Mane": {
+        'PDP': 0,
+        'ODP': 0,
+        'OTG': 0,
+        'Jumlah ODP Selesai Pantau': 0,
+        'Jumlah Suspek': 0,
+        'Suspek Dirawat': 0,
+        'Suspek Isolasi Mandiri': 0,
+        'Suspek Terkonfirmasi': 0,
+        'Konfirmasi Isolasi Mandiri': 0,
+        'Jumlah PDP Sehat': 0,
+        'Discarded': 0,
+        'Konfirmasi Sembuh': 0,
+        'Konfirmasi Meninggal': 0,
+        'Suspek Meninggal/Probable': 0,
+        'Konfirmasi Dirawat': 0,
+        'Jumlah Kasus Konfirmasi': 0,
+      },
+      "Kecamatan Mila": {
         'PDP': 0,
         'ODP': 0,
         'OTG': 0,

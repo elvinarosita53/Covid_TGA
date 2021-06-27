@@ -65,6 +65,7 @@ List<String> kecamatan = [
   "Kecamatan Keumala",
   "Kecamatan Kota Sigli",
   "Kecamatan Mane",
+  "Kecamatan Mila",
   "Kecamatan Muara Tiga",
   "Kecamatan Mutiara",
   "Kecamatan Mutiara Timur",

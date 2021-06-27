@@ -28,7 +28,7 @@ class CardKesimpulan extends StatelessWidget {
           children: [
             Text(
               judulTextKesimpulan,
-              style: TextStyle(fontSize: 13, color: primarycolor),
+              style: TextStyle(fontSize: 12, color: primarycolor),
             ),
             SizedBox(
               height: 10,
@@ -42,14 +42,14 @@ class CardKesimpulan extends StatelessWidget {
                       Text(
                         kesimpulanKasus,
                         style: TextStyle(
-                            fontSize: 17,
+                            fontSize: 15,
                             color: primarycolor,
                             fontWeight: FontWeight.bold),
                       ),
                       Text(
                         total.toString(),
                         style: TextStyle(
-                            fontSize: 17,
+                            fontSize: 15,
                             color: primarycolor,
                             fontWeight: FontWeight.bold),
                       )
