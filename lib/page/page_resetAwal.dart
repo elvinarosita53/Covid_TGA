@@ -174,7 +174,7 @@ class _PageResetAwalState extends State<PageResetAwal> {
                                     context: context,
                                     builder: (context) {
                                       return AlertDialog(
-                                        title: Text("Email Berhasil Dikirim"),
+                                        title: Text("Berhasil Di Kirim"),
                                         actions: [
                                           TextButton(
                                             onPressed: () {
