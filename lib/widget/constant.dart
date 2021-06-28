@@ -111,7 +111,7 @@ List<Map> dataPanduan = [
   {'warna': Colors.yellow, 'kasus': "KASUS PROBABLE"},
   {'warna': Colors.green, 'kasus': "KASUS KONFIRMASI"},
   {'warna': Colors.pink, 'kasus': "KONTAK ERAT"},
-  {'warna': Colors.grey, 'kasus': "PELAKU PERJALANA"},
+  {'warna': Colors.grey, 'kasus': "PELAKU PERJALANAN"},
   {'warna': Colors.blueAccent, 'kasus': "DISCARDED"},
   {'warna': Colors.blue[900], 'kasus': "SELESAI ISOLASI"},
   {'warna': Colors.red, 'kasus': "KEMATIAN"},

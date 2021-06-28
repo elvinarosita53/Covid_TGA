@@ -12,6 +12,7 @@ class Kecamatans {
   final int keumala;
   final int kotaSigli;
   final int mane;
+  final int mila;
   final int muaraTiga;
   final int mutiara;
   final int mutiaraTimur;
@@ -36,6 +37,7 @@ class Kecamatans {
     @required this.keumala,
     @required this.kotaSigli,
     @required this.mane,
+    @required this.mila,
     @required this.muaraTiga,
     @required this.mutiara,
     @required this.mutiaraTimur,

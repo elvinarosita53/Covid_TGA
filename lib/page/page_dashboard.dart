@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:menu_login/model/kecamatans.dart';
 import 'package:menu_login/model/tabel.dart';
+import 'package:menu_login/pdf_api.dart';
 import 'package:menu_login/widget/boxGrafik.dart';
 import 'package:menu_login/widget/build_chart.dart';
 import 'package:menu_login/widget/build_kesimpulan.dart';
@@ -42,6 +43,7 @@ class _PageDashboardState extends State<PageDashboard> {
     'Konfirmasi Dirawat': 0,
     'Jumlah Kasus Konfirmasi': 0,
   };
+  Map<String, Map<String, int>> ketPerKec = {};
   CollectionReference backendGrafik =
       FirebaseFirestore.instance.collection('data_covid');
 
@@ -69,14 +71,15 @@ class _PageDashboardState extends State<PageDashboard> {
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
                     children: [
-                      Expanded(child: BuildKesimpulan()),
+                      Expanded(
+                        child: BuildKesimpulan(),
+                      ),
                       SizedBox(
                         width: 10,
                       ),
                       Expanded(
                         child: CustomButton(
                           onTapPdf: () async {
-                            // print("object");
                             setAwalDataKecamatan();
                             var result = await backendGrafik.get();
 
@@ -252,55 +255,99 @@ class _PageDashboardState extends State<PageDashboard> {
                               },
                             );
 
-                            Map<String, Map> kecamatanPerKasus = {
-                              'PDP': {},
-                              'ODP': {},
-                              'OTG': {},
-                              'Jumlah ODP Selesai Pantau': {},
-                              'Jumlah Suspek': {},
-                              'Suspek Dirawat': {},
-                              'Suspek Isolasi Mandiri': {},
-                              'Suspek Terkonfirmasi': {},
-                              'Konfirmasi Isolasi Mandiri': {},
-                              'Jumlah PDP Sehat': {},
-                              'Discarded': {},
-                              'Konfirmasi Sembuh': {},
-                              'Konfirmasi Meninggal': {},
-                              'Suspek Meninggal/Probable': {},
-                              'Konfirmasi Dirawat': {},
-                              'Jumlah Kasus Konfirmasi': {},
+                            ketPerKec = {
+                              "Jumlah OPD Selesai Pantau": {},
+                              "Jumlah PDP Sehat": {},
+                              "Jumlah Suspek": {},
+                              "Suspek Dirawat": {},
+                              "Suspek Isolasi Mandiri": {},
+                              "Suspek Terkonfirmasi": {},
+                              "Discarded": {},
+                              "Suspek Meninggal/Probable": {},
+                              "Jumlah Kasus Konfirmasi": {},
+                              "Konfirmasi Dirawat": {},
+                              "Konfirmasi Isolasi Mandiri": {},
+                              "Konfirmasi Sembuh": {},
+                              "Konfirmasi Meninggal": {},
                             };
 
-                            // FIXME
-                            for (var ket in keterangans) {
-                              for (var kec in kecamatan) {
-                                print("$ket di $kec");
-                                kecamatanPerKasus[ket][kec] = 1;
+                            for (int i = 0; i < keterangans.length; i++) {
+                              for (int j = 0; j < kecamatan.length; j++) {
+                                ketPerKec[keterangans[i]][kecamatan[j]] =
+                                    (kasusPerKecamatan[kecamatan[j]]
+                                                [keterangans[i]] ==
+                                            null)
+                                        ? 0
+                                        : kasusPerKecamatan[kecamatan[j]]
+                                            [keterangans[i]];
                               }
                             }
-
-                            print(
-                                "keterangan per kecamatan ${kecamatanPerKasus}");
-
-                            /*
-                            {
-                              keterangan : { 
-                                             kecamatan A : 0, 
-                                             kecamatan B : 0
-                                            },
-                              keterangan : { 
-                                             kecamatan A : 0, 
-                                             kecamatan B : 0
-                                            },
-                              keterangan : { 
-                                             kecamatan A : 0, 
-                                             kecamatan B : 0
-                                            },
-                            }
-                             */
+                            print("data : $ketPerKec");
+                            // Tabel tabel = Tabel(items: items)
+                            List<TabelItem> dataTabel = [];
+                            ketPerKec.forEach(
+                              (keterangan, kecValue) {
+                                dataTabel.add(
+                                  TabelItem(
+                                    keterangan: keterangan,
+                                    kecamatans: Kecamatans(
+                                      bate: kecValue['Kecamatan Bate'] ?? 0,
+                                      delima: kecValue['Kecamatan Delima'] ?? 0,
+                                      geumpangPidie: kecValue[
+                                              'Kecamatan Geumpang Pidie",'] ??
+                                          0,
+                                      geulumpangTiga: kecValue[
+                                              'Kecamatan Geulumpang Tiga'] ??
+                                          0,
+                                      glumpangBaro:
+                                          kecValue['Kecamatan Glumpang Baro'] ??
+                                              0,
+                                      grongGrong:
+                                          kecValue['Kecamatan Grong-Grong'] ??
+                                              0,
+                                      indraJaya:
+                                          kecValue['Kecamatan Indra Jaya'] ?? 0,
+                                      kembangTanjong: kecValue[
+                                              'Kecamatan Kembang Tanjong'] ??
+                                          0,
+                                      keumala:
+                                          kecValue['Kecamatan Keumala'] ?? 0,
+                                      kotaSigli:
+                                          kecValue['Kecamatan Kota Sigli'] ?? 0,
+                                      mane: kecValue['Kecamatan Mane'] ?? 0,
+                                      mila: kecValue['Kecamatan Mila'] ?? 0,
+                                      muaraTiga:
+                                          kecValue['Kecamatan Muara Tiga'] ?? 0,
+                                      mutiara:
+                                          kecValue['Kecamatan Mutiara'] ?? 0,
+                                      mutiaraTimur:
+                                          kecValue['Kecamatan Mutiara Timur'] ??
+                                              0,
+                                      padangTiji:
+                                          kecValue['Kecamatan Padang Tiji'] ??
+                                              0,
+                                      peukanBaro:
+                                          kecValue['Kecamatan Peukan Baro'] ??
+                                              0,
+                                      pidie: kecValue['Kecamatan Pidie'] ?? 0,
+                                      sakti: kecValue['Kecamatan Sakti'] ?? 0,
+                                      simpangTiga:
+                                          kecValue['Kecamatan Simpang Tiga'] ??
+                                              0,
+                                      tangse: kecValue['Kecamatan Tangse'] ?? 0,
+                                      tiro: kecValue['Kecamatan Tiro'] ?? 0,
+                                      titeue: kecValue['Kecamatan Titeue'] ?? 0,
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                            Tabel tabel = Tabel(items: dataTabel);
+                            final pdfFile = await PdfApi.generateFile(tabel);
+                            PdfApi.openFile(pdfFile);
                           },
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -497,6 +544,27 @@ class _PageDashboardState extends State<PageDashboard> {
                   },
                 ),
                 Boxgrafik(
+                  kasus: "Dirawat",
+                  total: kasus['Konfirmasi Dirawat'],
+                  kotalKecil: kwarna_dirawat,
+                  onBottonShow: () {
+                    showModalBottomSheet<void>(
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      builder: (BuildContext context) {
+                        return TabelBottomShow(
+                          isiTabel: [
+                            {
+                              'kasus': 'Konfirmasi Dirawat',
+                              'total': kasus['Konfirmasi Dirawat']
+                            },
+                          ],
+                        );
+                      },
+                    );
+                  },
+                ),
+                Boxgrafik(
                   kasus: "Sembuh",
                   total: kasus['Jumlah PDP Sehat'] +
                       kasus['Discarded'] +
@@ -517,27 +585,6 @@ class _PageDashboardState extends State<PageDashboard> {
                             {
                               'kasus': 'Konfirmasi Sembuh',
                               'total': kasus['Konfirmasi Sembuh']
-                            },
-                          ],
-                        );
-                      },
-                    );
-                  },
-                ),
-                Boxgrafik(
-                  kasus: "Dirawat",
-                  total: kasus['Konfirmasi Dirawat'],
-                  kotalKecil: kwarna_dirawat,
-                  onBottonShow: () {
-                    showModalBottomSheet<void>(
-                      context: context,
-                      backgroundColor: Colors.transparent,
-                      builder: (BuildContext context) {
-                        return TabelBottomShow(
-                          isiTabel: [
-                            {
-                              'kasus': 'Konfirmasi Dirawat',
-                              'total': kasus['Konfirmasi Dirawat']
                             },
                           ],
                         );

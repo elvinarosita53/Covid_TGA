@@ -9,32 +9,20 @@ class PageDetailKesimpulan extends StatelessWidget {
   final String maxusiaMeninggal;
   final int maxMeninggal;
   final int maxPositif;
-  final int usiaPositif;
-  final int usiaMeninggal;
-  final Map<String, double> rataRata = {
-    'positif': 0.0,
-    'sembuh': 0.0,
-    'meninggal': 0.0,
-    'dirawat': 0.0,
-    'tersuspek': 0.0,
-  };
-  final Map<String, double> varianKasus = {
-    'positif': 0.0,
-    'sembuh': 0.0,
-    'meninggal': 0.0,
-    'dirawat': 0.0,
-    'tersuspek': 0.0,
-  };
 
-  PageDetailKesimpulan(
-      {this.maxKecamatanPositif,
-      this.maxKecamatanMeninggal,
-      this.maxUsiaPositif,
-      this.maxusiaMeninggal,
-      this.maxMeninggal,
-      this.maxPositif,
-      this.usiaPositif,
-      this.usiaMeninggal});
+  final Map<String, double> rataRata;
+  final Map<String, double> varianKasus;
+
+  PageDetailKesimpulan({
+    this.maxKecamatanPositif,
+    this.maxKecamatanMeninggal,
+    this.maxUsiaPositif,
+    this.maxusiaMeninggal,
+    this.maxMeninggal,
+    this.maxPositif,
+    this.varianKasus,
+    this.rataRata,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -69,43 +57,45 @@ class PageDetailKesimpulan extends StatelessWidget {
               kesimpulanKasus: 'Usia $maxusiaMeninggal Tahun',
             ),
             CardKesimpulan(
-              kesimpulanKasus: "${rataRata['positif']} ",
+              kesimpulanKasus: "${rataRata['positif'].toStringAsFixed(2)} ",
               judulTextKesimpulan: 'Rata-Rata Positif Perbulan:',
             ),
             CardKesimpulan(
-              kesimpulanKasus: "${rataRata['sembuh']} ",
+              kesimpulanKasus: "${rataRata['sembuh'].toStringAsFixed(2)} ",
               judulTextKesimpulan: ' Rata-Rata Sembuh Perbulan:',
             ),
             CardKesimpulan(
-              kesimpulanKasus: "${rataRata['meninggal']} ",
+              kesimpulanKasus: "${rataRata['meninggal'].toStringAsFixed(2)} ",
               judulTextKesimpulan: 'Rata-Rata Meninggal Perbulan:',
             ),
             CardKesimpulan(
-              kesimpulanKasus: "${rataRata['dirawat']} ",
+              kesimpulanKasus: "${rataRata['dirawat'].toStringAsFixed(2)} ",
               judulTextKesimpulan: 'Rata-Rata Dirawat Perbulan:',
             ),
             CardKesimpulan(
-              kesimpulanKasus: "${rataRata['tersuspek']} ",
+              kesimpulanKasus: "${rataRata['tersuspek'].toStringAsFixed(2)} ",
               judulTextKesimpulan: 'Rata-Rata Tersuspek Perbulan:',
             ),
             CardKesimpulan(
-              kesimpulanKasus: "${varianKasus['positif']} ",
+              kesimpulanKasus: "${varianKasus['positif'].toStringAsFixed(2)} ",
               judulTextKesimpulan: 'Varian Positif Perbulan:',
             ),
             CardKesimpulan(
-              kesimpulanKasus: "${varianKasus['sembuh']} ",
+              kesimpulanKasus: "${varianKasus['sembuh'].toStringAsFixed(2)} ",
               judulTextKesimpulan: 'Varian Sembuh Perbulan:',
             ),
             CardKesimpulan(
-              kesimpulanKasus: "${varianKasus['meninggal']} ",
+              kesimpulanKasus:
+                  "${varianKasus['meninggal'].toStringAsFixed(2)} ",
               judulTextKesimpulan: 'Varian Meninggal Perbulan:',
             ),
             CardKesimpulan(
-              kesimpulanKasus: "${varianKasus['dirawat']} ",
+              kesimpulanKasus: "${varianKasus['dirawat'].toStringAsFixed(2)} ",
               judulTextKesimpulan: 'Varian Dirawat Perbulan:',
             ),
             CardKesimpulan(
-              kesimpulanKasus: "${varianKasus['tersuspek']} ",
+              kesimpulanKasus:
+                  "${varianKasus['tersuspek'].toStringAsFixed(2)} ",
               judulTextKesimpulan: 'Varian Tersuspek Perbulan:',
             ),
           ],

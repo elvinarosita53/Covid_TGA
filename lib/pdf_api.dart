@@ -41,9 +41,9 @@ class PdfApi {
             imageJpg,
             imageKominfo,
           ),
-          SizedBox(height: PdfPageFormat.cm * 2),
+          SizedBox(height: PdfPageFormat.cm * 1),
           ...buildTable(dataTabel),
-          SizedBox(height: PdfPageFormat.cm * 2),
+          SizedBox(height: PdfPageFormat.cm * 1),
           Footer(
             leading:
                 Text("Updated at :" + DateFormat.yMd().format(DateTime.now())),
@@ -102,6 +102,7 @@ class PdfApi {
           item.kecamatans.keumala +
           item.kecamatans.kotaSigli +
           item.kecamatans.mane +
+          item.kecamatans.mila +
           item.kecamatans.muaraTiga +
           item.kecamatans.mutiara +
           item.kecamatans.mutiaraTimur +
@@ -128,9 +129,10 @@ class PdfApi {
       "Keumala",
       "KT.Sigli",
       "Mane",
-      "M Tiga",
+      "Mila",
     ];
     final headers2 = [
+      "M Tiga",
       'Keterangan',
       "Mutiara",
       "M.Timur",
@@ -161,7 +163,7 @@ class PdfApi {
           item.kecamatans.keumala.toString(),
           item.kecamatans.kotaSigli.toString(),
           item.kecamatans.mane.toString(),
-          item.kecamatans.muaraTiga.toString(),
+          item.kecamatans.mila.toString(),
         ];
       },
     ).toList();
@@ -171,6 +173,7 @@ class PdfApi {
       (item) {
         return [
           item.keterangan,
+          item.kecamatans.muaraTiga.toString(),
           item.kecamatans.mutiara.toString(),
           item.kecamatans.mutiaraTimur.toString(),
           item.kecamatans.padangTiji.toString(),
@@ -191,8 +194,8 @@ class PdfApi {
         data: data,
         headers: headers,
         border: null,
-        headerStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-        cellStyle: TextStyle(fontSize: 10),
+        headerStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
+        cellStyle: TextStyle(fontSize: 9),
         headerDecoration: BoxDecoration(color: PdfColors.grey300),
         cellHeight: 30,
         cellAlignments: {
@@ -216,8 +219,8 @@ class PdfApi {
         data: data2,
         headers: headers2,
         border: null,
-        headerStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
-        cellStyle: TextStyle(fontSize: 10),
+        headerStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
+        cellStyle: TextStyle(fontSize: 9),
         headerDecoration: BoxDecoration(color: PdfColors.grey300),
         cellHeight: 30,
         cellAlignments: {
@@ -232,6 +235,8 @@ class PdfApi {
           8: Alignment.center,
           9: Alignment.center,
           10: Alignment.center,
+          11: Alignment.center,
+          12: Alignment.center,
         },
       ),
     ];

@@ -475,6 +475,8 @@ class BuildKesimpulan extends StatelessWidget {
                                     maxPositif: maxPositif,
                                     maxUsiaPositif: maxUsiaPositif,
                                     maxusiaMeninggal: maxusiaMeninggal,
+                                    rataRata: rataRata,
+                                    varianKasus: varianKasus,
                                   ),
                                 ),
                               );

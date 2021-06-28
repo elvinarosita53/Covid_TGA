@@ -63,7 +63,7 @@ class _MainPageState extends State<MainPage> {
                 ),
                 SalomonBottomBarItem(
                   icon: Icon(Icons.person),
-                  title: Text("Admin"),
+                  title: Text("Person"),
                   selectedColor: primarycolor,
                 ),
               ]

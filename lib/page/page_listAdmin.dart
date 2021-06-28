@@ -203,6 +203,7 @@ class _PageListAdminState extends State<PageListAdmin> {
                                               ElevatedButton(
                                                 child: Text("Ya"),
                                                 onPressed: () async {
+                                                  Navigator.pop(context);
                                                   await FirebaseFirestore
                                                       .instance
                                                       .collection('data_covid')
