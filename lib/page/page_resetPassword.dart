@@ -94,6 +94,7 @@ class PageResetPassword extends StatelessWidget {
                             ],
                           ),
                           controller: contorllerEmail,
+                          keyboardType: TextInputType.emailAddress,
                           decoration: InputDecoration(
                             hintText: "Masukkan Email Anda",
                             focusedBorder: OutlineInputBorder(

@@ -7,6 +7,7 @@ class InputData extends StatefulWidget {
   final String nama;
   final String hintText;
   final TextEditingController controlerinputdata;
+  final TextInputType textInputType;
 
   const InputData({
     this.isRequied = true,
@@ -14,6 +15,7 @@ class InputData extends StatefulWidget {
     @required this.hintText,
     @required this.controlerinputdata,
     this.onChange,
+    this.textInputType,
   });
 
   @override
@@ -44,11 +46,14 @@ class _InputDataState extends State<InputData> {
                 )
               : MultiValidator([]),
           controller: widget.controlerinputdata,
+          keyboardType: widget.textInputType,
           decoration: InputDecoration(
             // contentPadding: EdgeInsets.symmetric(horizontal: 10),
             isDense: true,
             hintText: widget.hintText,
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
           ),
           onChanged: widget.onChange,
         ),

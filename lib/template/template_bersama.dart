@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:marquee/marquee.dart';
@@ -12,11 +13,12 @@ class TemplateBersama extends StatefulWidget {
   final Widget floatingActionButton;
   final Widget child;
 
-  TemplateBersama(
-      {@required this.namaAppbar,
-      this.body,
-      this.floatingActionButton,
-      this.child});
+  TemplateBersama({
+    @required this.namaAppbar,
+    this.body,
+    this.floatingActionButton,
+    this.child,
+  });
 
   @override
   _TemplateBersamaState createState() => _TemplateBersamaState();
@@ -24,6 +26,8 @@ class TemplateBersama extends StatefulWidget {
 
 class _TemplateBersamaState extends State<TemplateBersama> {
   FirebaseAuth auth = FirebaseAuth.instance;
+  CollectionReference backend =
+      FirebaseFirestore.instance.collection('data_profil');
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +47,10 @@ class _TemplateBersamaState extends State<TemplateBersama> {
                 overflow: TextOverflow.ellipsis,
                 // maxLines: 2,
                 style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold),
+                  color: Colors.white,
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               actions: [
                 PopupMenuButton(
@@ -93,20 +98,52 @@ class _TemplateBersamaState extends State<TemplateBersama> {
                 )
               ],
               bottom: PreferredSize(
-                child: Container(
-                  color: Colors.white,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
+                child: (auth.currentUser != null)
+                    ? FutureBuilder<DocumentSnapshot>(
+                        future: backend.doc(auth.currentUser.uid).get(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            print("data : ${snapshot.data}");
+                            Map result = snapshot.data.data();
+
+                            return Container(
+                              color: Colors.white,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(20),
+                                    bottomRight: Radius.circular(20),
+                                  ),
+                                  color: primarycolor,
+                                ),
+                                height: 80,
+                                child: (result['role'] == 'admin')
+                                    ? widget.child
+                                    : SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                      ),
+                              ),
+                            );
+                          } else {
+                            return loading;
+                          }
+                        },
+                      )
+                    : Container(
+                        color: Colors.white,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20),
+                            ),
+                            color: primarycolor,
+                          ),
+                          height: 80,
+                          child: widget.child,
+                        ),
                       ),
-                      color: primarycolor,
-                    ),
-                    height: 80,
-                    child: widget.child,
-                  ),
-                ),
                 preferredSize: Size.fromHeight(80),
               ),
               elevation: 0,

@@ -266,6 +266,7 @@ class _PageFormInputState extends State<PageFormInput> {
                   hintText: "Masukkan Nomor Telepon",
                   controlerinputdata: nohp,
                   isRequied: false,
+                  textInputType: TextInputType.phone,
                 ),
                 Row(
                   children: [

@@ -45,13 +45,13 @@ class PdfApi {
           ...buildTable(dataTabel),
           SizedBox(height: PdfPageFormat.cm * 1),
           Footer(
-            leading:
-                Text("Updated at :" + DateFormat.yMd().format(DateTime.now())),
+            leading: Text(
+                "Tanggal Update :" + DateFormat.yMd().format(DateTime.now())),
             trailing: Row(
               children: [
                 Container(
-                  height: 1.5 * PdfPageFormat.cm,
-                  width: 1.5 * PdfPageFormat.cm,
+                  height: 1 * PdfPageFormat.cm,
+                  width: 1 * PdfPageFormat.cm,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: MemoryImage(imageSurveilans),
@@ -60,8 +60,8 @@ class PdfApi {
                 ),
                 SizedBox(width: PdfPageFormat.cm),
                 Container(
-                  height: 1.5 * PdfPageFormat.cm,
-                  width: 1.5 * PdfPageFormat.cm,
+                  height: 1 * PdfPageFormat.cm,
+                  width: 1 * PdfPageFormat.cm,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: MemoryImage(image119),
@@ -70,8 +70,8 @@ class PdfApi {
                 ),
                 SizedBox(width: PdfPageFormat.cm),
                 Container(
-                  height: 1.5 * PdfPageFormat.cm,
-                  width: 1.5 * PdfPageFormat.cm,
+                  height: 1 * PdfPageFormat.cm,
+                  width: 1 * PdfPageFormat.cm,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: MemoryImage(imageGermas),
@@ -84,8 +84,10 @@ class PdfApi {
         ],
       ),
     );
-
-    return saveDocument(name: 'example.pdf', pdf: pdf);
+    String day = DateFormat.d().format(DateTime.now());
+    String month = DateFormat.M().format(DateTime.now());
+    String year = DateFormat.y().format(DateTime.now());
+    return saveDocument(name: 'report_${day}_${month}_${year}.pdf', pdf: pdf);
   }
 
   static List<Widget> buildTable(Tabel dataTabel) {
@@ -247,8 +249,8 @@ class PdfApi {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Container(
-          height: 1.5 * PdfPageFormat.cm,
-          width: 1.5 * PdfPageFormat.cm,
+          height: 1 * PdfPageFormat.cm,
+          width: 1 * PdfPageFormat.cm,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: MemoryImage(imageJpg),
@@ -266,8 +268,8 @@ class PdfApi {
         ),
         SizedBox(width: 0.5 * PdfPageFormat.cm),
         Container(
-          height: 1.5 * PdfPageFormat.cm,
-          width: 1.5 * PdfPageFormat.cm,
+          height: 1 * PdfPageFormat.cm,
+          width: 1 * PdfPageFormat.cm,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: MemoryImage(imageKominfo),

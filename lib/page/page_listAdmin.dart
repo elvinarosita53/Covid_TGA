@@ -103,14 +103,7 @@ class _PageListAdminState extends State<PageListAdmin> {
                     isDense: true,
                     contentPadding: EdgeInsets.only(left: 10),
                   ),
-                  items: [
-                    "kec.a",
-                    "kec.b",
-                    "kec.c",
-                    "kec.d",
-                    "kec.e",
-                  ],
-
+                  items: kecamatan,
                   hint: "Search",
                   maxHeight: 300,
                   showClearButton: true,

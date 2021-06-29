@@ -356,7 +356,7 @@ class BuildChart extends StatelessWidget {
       barWidth: 2, // ketebalan garis
       isStrokeCapRound: true,
       dotData: FlDotData(
-        show: false,
+        show: true,
       ),
     );
   }

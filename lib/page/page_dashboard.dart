@@ -13,6 +13,7 @@ import 'package:menu_login/widget/constant.dart';
 import 'package:menu_login/template/template.dart';
 import 'package:menu_login/widget/customButton.dart';
 import 'package:menu_login/widget/tabelBottomShow.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class PageDashboard extends StatefulWidget {
   @override
@@ -46,326 +47,344 @@ class _PageDashboardState extends State<PageDashboard> {
   Map<String, Map<String, int>> ketPerKec = {};
   CollectionReference backendGrafik =
       FirebaseFirestore.instance.collection('data_covid');
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
-    return Template(
-      body: ListView(
-        children: (currentKecamatan == null)
-            ? [
-                searchBox(context),
-                Card(
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+    return ModalProgressHUD(
+      inAsyncCall: isLoading,
+      child: Template(
+        body: ListView(
+          children: (currentKecamatan == null)
+              ? [
+                  searchBox(context),
+                  Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    margin: EdgeInsets.all(15),
+                    child: BuildChart(
+                      currentKecamatan: currentKecamatan,
+                    ),
                   ),
-                  margin: EdgeInsets.all(15),
-                  child: BuildChart(
-                    currentKecamatan: currentKecamatan,
-                  ),
-                ),
-                buildCarosel(),
+                  buildCarosel(),
 
-                //NOTE untuk botton kesimpulan grafik
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: BuildKesimpulan(),
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(
-                        child: CustomButton(
-                          onTapPdf: () async {
-                            setAwalDataKecamatan();
-                            var result = await backendGrafik.get();
-
-                            // //NOTE ambil data d database
-                            dataCovid = result.docs
-                                .map((perItem) => perItem.data())
-                                .toList();
-
-                            // //data Kecamatan
-                            dataKecamatan = dataCovid
-                                .map(
-                                    (perKecamatan) => perKecamatan['kecamatan'])
-                                .toList();
-                            // print("data kecamata $dataKecamatan");
-                            // // NOTE diolah datany
-                            // // chek keterangan per kecamatan
-
-                            for (var i = 0; i < dataKecamatan.length; i++) {
-                              switch (dataKecamatan[i]) {
-                                case 'Kecamatan Bate':
-                                  filterKecamatan(
-                                      'Kecamatan Bate', dataCovid[i]);
-                                  break;
-                                case "Kecamatan Delima":
-                                  filterKecamatan(
-                                      "Kecamatan Delima", dataCovid[i]);
-                                  break;
-                                case "Kecamatan Geumpang Pidie":
-                                  filterKecamatan(
-                                      "Kecamatan Geumpang Pidie", dataCovid[i]);
-                                  break;
-                                case "Kecamatan Geulumpang Tiga":
-                                  filterKecamatan("Kecamatan Geulumpang Tiga",
-                                      dataCovid[i]);
-                                  break;
-                                case "Kecamatan Glumpang Baro":
-                                  filterKecamatan(
-                                      "Kecamatan Glumpang Baro", dataCovid[i]);
-                                  break;
-                                case "Kecamatan Grong-Grong":
-                                  filterKecamatan(
-                                      "Kecamatan Grong-Grong", dataCovid[i]);
-                                  break;
-                                case "Kecamatan Indra Jaya":
-                                  filterKecamatan(
-                                      "Kecamatan Indra Jaya", dataCovid[i]);
-                                  break;
-                                case "Kecamatan Kembang Tanjong":
-                                  filterKecamatan("Kecamatan Kembang Tanjong",
-                                      dataCovid[i]);
-                                  break;
-                                case "Kecamatan Keumala":
-                                  filterKecamatan(
-                                      "Kecamatan Keumala", dataCovid[i]);
-                                  break;
-                                case "Kecamatan Kota Sigli":
-                                  filterKecamatan(
-                                      "Kecamatan Kota Sigli", dataCovid[i]);
-                                  break;
-                                case "Kecamatan Mane":
-                                  filterKecamatan(
-                                      "Kecamatan Mane", dataCovid[i]);
-                                  break;
-                                case "Kecamatan Muara Tiga":
-                                  filterKecamatan(
-                                      "Kecamatan Muara Tiga", dataCovid[i]);
-                                  break;
-                                case "Kecamatan Mutiara":
-                                  filterKecamatan(
-                                      "Kecamatan Mutiara", dataCovid[i]);
-                                  break;
-                                case "Kecamatan Mutiara Timur":
-                                  filterKecamatan(
-                                      "Kecamatan Mutiara Timur", dataCovid[i]);
-                                  break;
-                                case "Kecamatan Padang Tiji":
-                                  filterKecamatan(
-                                      "Kecamatan Padang Tiji", dataCovid[i]);
-                                  break;
-                                case 'kecamatan Bate':
-                                  filterKecamatan(
-                                      'kecamatan Bate', dataCovid[i]);
-                                  break;
-                                case "Kecamatan Peukan Baro":
-                                  filterKecamatan(
-                                      "Kecamatan Peukan Baro", dataCovid[i]);
-                                  break;
-                                case "Kecamatan Pidie":
-                                  filterKecamatan(
-                                      "Kecamatan Pidie", dataCovid[i]);
-                                  break;
-                                case "Kecamatan Sakti":
-                                  filterKecamatan(
-                                      "Kecamatan Sakti", dataCovid[i]);
-                                  break;
-                                case "Kecamatan Simpang Tiga":
-                                  filterKecamatan(
-                                      "Kecamatan Simpang Tiga", dataCovid[i]);
-                                  break;
-                                case "Kecamatan Tangse":
-                                  filterKecamatan(
-                                      "Kecamatan Tangse", dataCovid[i]);
-                                  break;
-                                case "Kecamatan Tiro":
-                                  filterKecamatan(
-                                      "Kecamatan Tiro", dataCovid[i]);
-                                  break;
-
-                                case "Kecamatan Titeue":
-                                  filterKecamatan(
-                                      "Kecamatan Titeue", dataCovid[i]);
-                                  break;
-                              }
-                            }
-
-                            Map<String, Map> dataBaruKecamatan = {
-                              "Kecamatan Bate": {},
-                              "Kecamatan Delima": {},
-                              "Kecamatan Geumpang Pidie": {},
-                              "Kecamatan Geulumpang Tiga": {},
-                              "Kecamatan Glumpang Baro": {},
-                              "Kecamatan Grong-Grong": {},
-                              "Kecamatan Indra Jaya": {},
-                              "Kecamatan Kembang Tanjong": {},
-                              "Kecamatan Keumala": {},
-                              "Kecamatan Kota Sigli": {},
-                              "Kecamatan Mane": {},
-                              "Kecamatan Mila": {},
-                              "Kecamatan Muara Tiga": {},
-                              "Kecamatan Mutiara": {},
-                              "Kecamatan Mutiara Timur": {},
-                              "Kecamatan Padang Tiji": {},
-                              "Kecamatan Peukan Baro": {},
-                              "Kecamatan Pidie": {},
-                              "Kecamatan Sakti": {},
-                              "Kecamatan Simpang Tiga": {},
-                              "Kecamatan Tangse": {},
-                              "Kecamatan Tiro": {},
-                              "Kecamatan Titeue": {},
-                            };
-
-                            String maxKecamatanPositif = '';
-                            String maxKecamatanMeninggal = '';
-                            String maxUsiaPositif = '';
-                            String maxusiaMeninggal = '';
-                            int maxMeninggal = 0;
-                            int maxPositif = 0;
-                            int usiaPositif = 0;
-                            int usiaMeninggal = 0;
-
-                            kasusPerKecamatan.forEach(
-                              (key, value) {
-                                //     // untuk data positif tertinggi
-                                dataBaruKecamatan[key]['positif'] =
-                                    value['Jumlah Kasus Konfirmasi'];
-                                if (maxPositif <
-                                    dataBaruKecamatan[key]['positif']) {
-                                  maxPositif =
-                                      dataBaruKecamatan[key]['positif'];
-                                  maxKecamatanPositif = key;
-                                }
-                                // untuk data meninggal tertinggi
-                                dataBaruKecamatan[key]['meninggal'] =
-                                    value['Konfirmasi Meninggal'] +
-                                        value['Suspek Meninggal/Probable'];
-
-                                if (maxMeninggal <
-                                    dataBaruKecamatan[key]['meninggal']) {
-                                  maxMeninggal =
-                                      dataBaruKecamatan[key]['meninggal'];
-                                  maxKecamatanMeninggal = key;
-                                }
-                              },
-                            );
-
-                            ketPerKec = {
-                              "Jumlah OPD Selesai Pantau": {},
-                              "Jumlah PDP Sehat": {},
-                              "Jumlah Suspek": {},
-                              "Suspek Dirawat": {},
-                              "Suspek Isolasi Mandiri": {},
-                              "Suspek Terkonfirmasi": {},
-                              "Discarded": {},
-                              "Suspek Meninggal/Probable": {},
-                              "Jumlah Kasus Konfirmasi": {},
-                              "Konfirmasi Dirawat": {},
-                              "Konfirmasi Isolasi Mandiri": {},
-                              "Konfirmasi Sembuh": {},
-                              "Konfirmasi Meninggal": {},
-                            };
-
-                            for (int i = 0; i < keterangans.length; i++) {
-                              for (int j = 0; j < kecamatan.length; j++) {
-                                ketPerKec[keterangans[i]][kecamatan[j]] =
-                                    (kasusPerKecamatan[kecamatan[j]]
-                                                [keterangans[i]] ==
-                                            null)
-                                        ? 0
-                                        : kasusPerKecamatan[kecamatan[j]]
-                                            [keterangans[i]];
-                              }
-                            }
-                            print("data : $ketPerKec");
-                            // Tabel tabel = Tabel(items: items)
-                            List<TabelItem> dataTabel = [];
-                            ketPerKec.forEach(
-                              (keterangan, kecValue) {
-                                dataTabel.add(
-                                  TabelItem(
-                                    keterangan: keterangan,
-                                    kecamatans: Kecamatans(
-                                      bate: kecValue['Kecamatan Bate'] ?? 0,
-                                      delima: kecValue['Kecamatan Delima'] ?? 0,
-                                      geumpangPidie: kecValue[
-                                              'Kecamatan Geumpang Pidie",'] ??
-                                          0,
-                                      geulumpangTiga: kecValue[
-                                              'Kecamatan Geulumpang Tiga'] ??
-                                          0,
-                                      glumpangBaro:
-                                          kecValue['Kecamatan Glumpang Baro'] ??
-                                              0,
-                                      grongGrong:
-                                          kecValue['Kecamatan Grong-Grong'] ??
-                                              0,
-                                      indraJaya:
-                                          kecValue['Kecamatan Indra Jaya'] ?? 0,
-                                      kembangTanjong: kecValue[
-                                              'Kecamatan Kembang Tanjong'] ??
-                                          0,
-                                      keumala:
-                                          kecValue['Kecamatan Keumala'] ?? 0,
-                                      kotaSigli:
-                                          kecValue['Kecamatan Kota Sigli'] ?? 0,
-                                      mane: kecValue['Kecamatan Mane'] ?? 0,
-                                      mila: kecValue['Kecamatan Mila'] ?? 0,
-                                      muaraTiga:
-                                          kecValue['Kecamatan Muara Tiga'] ?? 0,
-                                      mutiara:
-                                          kecValue['Kecamatan Mutiara'] ?? 0,
-                                      mutiaraTimur:
-                                          kecValue['Kecamatan Mutiara Timur'] ??
-                                              0,
-                                      padangTiji:
-                                          kecValue['Kecamatan Padang Tiji'] ??
-                                              0,
-                                      peukanBaro:
-                                          kecValue['Kecamatan Peukan Baro'] ??
-                                              0,
-                                      pidie: kecValue['Kecamatan Pidie'] ?? 0,
-                                      sakti: kecValue['Kecamatan Sakti'] ?? 0,
-                                      simpangTiga:
-                                          kecValue['Kecamatan Simpang Tiga'] ??
-                                              0,
-                                      tangse: kecValue['Kecamatan Tangse'] ?? 0,
-                                      tiro: kecValue['Kecamatan Tiro'] ?? 0,
-                                      titeue: kecValue['Kecamatan Titeue'] ?? 0,
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                            Tabel tabel = Tabel(items: dataTabel);
-                            final pdfFile = await PdfApi.generateFile(tabel);
-                            PdfApi.openFile(pdfFile);
-                          },
+                  //NOTE untuk botton kesimpulan grafik
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: BuildKesimpulan(),
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(
+                          child: CustomButton(
+                            onTapPdf: () async {
+                              setAwalDataKecamatan();
+                              var result = await backendGrafik.get();
+
+                              // //NOTE ambil data d database
+                              dataCovid = result.docs
+                                  .map((perItem) => perItem.data())
+                                  .toList();
+
+                              // //data Kecamatan
+                              dataKecamatan = dataCovid
+                                  .map((perKecamatan) =>
+                                      perKecamatan['kecamatan'])
+                                  .toList();
+                              // print("data kecamata $dataKecamatan");
+                              // // NOTE diolah datany
+                              // // chek keterangan per kecamatan
+
+                              for (var i = 0; i < dataKecamatan.length; i++) {
+                                switch (dataKecamatan[i]) {
+                                  case 'Kecamatan Bate':
+                                    filterKecamatan(
+                                        'Kecamatan Bate', dataCovid[i]);
+                                    break;
+                                  case "Kecamatan Delima":
+                                    filterKecamatan(
+                                        "Kecamatan Delima", dataCovid[i]);
+                                    break;
+                                  case "Kecamatan Geumpang Pidie":
+                                    filterKecamatan("Kecamatan Geumpang Pidie",
+                                        dataCovid[i]);
+                                    break;
+                                  case "Kecamatan Geulumpang Tiga":
+                                    filterKecamatan("Kecamatan Geulumpang Tiga",
+                                        dataCovid[i]);
+                                    break;
+                                  case "Kecamatan Glumpang Baro":
+                                    filterKecamatan("Kecamatan Glumpang Baro",
+                                        dataCovid[i]);
+                                    break;
+                                  case "Kecamatan Grong-Grong":
+                                    filterKecamatan(
+                                        "Kecamatan Grong-Grong", dataCovid[i]);
+                                    break;
+                                  case "Kecamatan Indra Jaya":
+                                    filterKecamatan(
+                                        "Kecamatan Indra Jaya", dataCovid[i]);
+                                    break;
+                                  case "Kecamatan Kembang Tanjong":
+                                    filterKecamatan("Kecamatan Kembang Tanjong",
+                                        dataCovid[i]);
+                                    break;
+                                  case "Kecamatan Keumala":
+                                    filterKecamatan(
+                                        "Kecamatan Keumala", dataCovid[i]);
+                                    break;
+                                  case "Kecamatan Kota Sigli":
+                                    filterKecamatan(
+                                        "Kecamatan Kota Sigli", dataCovid[i]);
+                                    break;
+                                  case "Kecamatan Mane":
+                                    filterKecamatan(
+                                        "Kecamatan Mane", dataCovid[i]);
+                                    break;
+                                  case "Kecamatan Muara Tiga":
+                                    filterKecamatan(
+                                        "Kecamatan Muara Tiga", dataCovid[i]);
+                                    break;
+                                  case "Kecamatan Mutiara":
+                                    filterKecamatan(
+                                        "Kecamatan Mutiara", dataCovid[i]);
+                                    break;
+                                  case "Kecamatan Mutiara Timur":
+                                    filterKecamatan("Kecamatan Mutiara Timur",
+                                        dataCovid[i]);
+                                    break;
+                                  case "Kecamatan Padang Tiji":
+                                    filterKecamatan(
+                                        "Kecamatan Padang Tiji", dataCovid[i]);
+                                    break;
+                                  case 'kecamatan Bate':
+                                    filterKecamatan(
+                                        'kecamatan Bate', dataCovid[i]);
+                                    break;
+                                  case "Kecamatan Peukan Baro":
+                                    filterKecamatan(
+                                        "Kecamatan Peukan Baro", dataCovid[i]);
+                                    break;
+                                  case "Kecamatan Pidie":
+                                    filterKecamatan(
+                                        "Kecamatan Pidie", dataCovid[i]);
+                                    break;
+                                  case "Kecamatan Sakti":
+                                    filterKecamatan(
+                                        "Kecamatan Sakti", dataCovid[i]);
+                                    break;
+                                  case "Kecamatan Simpang Tiga":
+                                    filterKecamatan(
+                                        "Kecamatan Simpang Tiga", dataCovid[i]);
+                                    break;
+                                  case "Kecamatan Tangse":
+                                    filterKecamatan(
+                                        "Kecamatan Tangse", dataCovid[i]);
+                                    break;
+                                  case "Kecamatan Tiro":
+                                    filterKecamatan(
+                                        "Kecamatan Tiro", dataCovid[i]);
+                                    break;
+
+                                  case "Kecamatan Titeue":
+                                    filterKecamatan(
+                                        "Kecamatan Titeue", dataCovid[i]);
+                                    break;
+                                }
+                              }
+
+                              Map<String, Map> dataBaruKecamatan = {
+                                "Kecamatan Bate": {},
+                                "Kecamatan Delima": {},
+                                "Kecamatan Geumpang Pidie": {},
+                                "Kecamatan Geulumpang Tiga": {},
+                                "Kecamatan Glumpang Baro": {},
+                                "Kecamatan Grong-Grong": {},
+                                "Kecamatan Indra Jaya": {},
+                                "Kecamatan Kembang Tanjong": {},
+                                "Kecamatan Keumala": {},
+                                "Kecamatan Kota Sigli": {},
+                                "Kecamatan Mane": {},
+                                "Kecamatan Mila": {},
+                                "Kecamatan Muara Tiga": {},
+                                "Kecamatan Mutiara": {},
+                                "Kecamatan Mutiara Timur": {},
+                                "Kecamatan Padang Tiji": {},
+                                "Kecamatan Peukan Baro": {},
+                                "Kecamatan Pidie": {},
+                                "Kecamatan Sakti": {},
+                                "Kecamatan Simpang Tiga": {},
+                                "Kecamatan Tangse": {},
+                                "Kecamatan Tiro": {},
+                                "Kecamatan Titeue": {},
+                              };
+
+                              String maxKecamatanPositif = '';
+                              String maxKecamatanMeninggal = '';
+                              String maxUsiaPositif = '';
+                              String maxusiaMeninggal = '';
+                              int maxMeninggal = 0;
+                              int maxPositif = 0;
+                              int usiaPositif = 0;
+                              int usiaMeninggal = 0;
+
+                              kasusPerKecamatan.forEach(
+                                (key, value) {
+                                  //     // untuk data positif tertinggi
+                                  dataBaruKecamatan[key]['positif'] =
+                                      value['Jumlah Kasus Konfirmasi'];
+                                  if (maxPositif <
+                                      dataBaruKecamatan[key]['positif']) {
+                                    maxPositif =
+                                        dataBaruKecamatan[key]['positif'];
+                                    maxKecamatanPositif = key;
+                                  }
+                                  // untuk data meninggal tertinggi
+                                  dataBaruKecamatan[key]['meninggal'] =
+                                      value['Konfirmasi Meninggal'] +
+                                          value['Suspek Meninggal/Probable'];
+
+                                  if (maxMeninggal <
+                                      dataBaruKecamatan[key]['meninggal']) {
+                                    maxMeninggal =
+                                        dataBaruKecamatan[key]['meninggal'];
+                                    maxKecamatanMeninggal = key;
+                                  }
+                                },
+                              );
+
+                              ketPerKec = {
+                                "Jumlah OPD Selesai Pantau": {},
+                                "Jumlah PDP Sehat": {},
+                                "Jumlah Suspek": {},
+                                "Suspek Dirawat": {},
+                                "Suspek Isolasi Mandiri": {},
+                                "Suspek Terkonfirmasi": {},
+                                "Discarded": {},
+                                "Suspek Meninggal/Probable": {},
+                                "Jumlah Kasus Konfirmasi": {},
+                                "Konfirmasi Dirawat": {},
+                                "Konfirmasi Isolasi Mandiri": {},
+                                "Konfirmasi Sembuh": {},
+                                "Konfirmasi Meninggal": {},
+                              };
+
+                              for (int i = 0; i < keterangans.length; i++) {
+                                for (int j = 0; j < kecamatan.length; j++) {
+                                  ketPerKec[keterangans[i]][kecamatan[j]] =
+                                      (kasusPerKecamatan[kecamatan[j]]
+                                                  [keterangans[i]] ==
+                                              null)
+                                          ? 0
+                                          : kasusPerKecamatan[kecamatan[j]]
+                                              [keterangans[i]];
+                                }
+                              }
+                              print("data : $ketPerKec");
+                              // Tabel tabel = Tabel(items: items)
+                              List<TabelItem> dataTabel = [];
+                              ketPerKec.forEach(
+                                (keterangan, kecValue) {
+                                  dataTabel.add(
+                                    TabelItem(
+                                      keterangan: keterangan,
+                                      kecamatans: Kecamatans(
+                                        bate: kecValue['Kecamatan Bate'] ?? 0,
+                                        delima:
+                                            kecValue['Kecamatan Delima'] ?? 0,
+                                        geumpangPidie: kecValue[
+                                                'Kecamatan Geumpang Pidie",'] ??
+                                            0,
+                                        geulumpangTiga: kecValue[
+                                                'Kecamatan Geulumpang Tiga'] ??
+                                            0,
+                                        glumpangBaro: kecValue[
+                                                'Kecamatan Glumpang Baro'] ??
+                                            0,
+                                        grongGrong:
+                                            kecValue['Kecamatan Grong-Grong'] ??
+                                                0,
+                                        indraJaya:
+                                            kecValue['Kecamatan Indra Jaya'] ??
+                                                0,
+                                        kembangTanjong: kecValue[
+                                                'Kecamatan Kembang Tanjong'] ??
+                                            0,
+                                        keumala:
+                                            kecValue['Kecamatan Keumala'] ?? 0,
+                                        kotaSigli:
+                                            kecValue['Kecamatan Kota Sigli'] ??
+                                                0,
+                                        mane: kecValue['Kecamatan Mane'] ?? 0,
+                                        mila: kecValue['Kecamatan Mila'] ?? 0,
+                                        muaraTiga:
+                                            kecValue['Kecamatan Muara Tiga'] ??
+                                                0,
+                                        mutiara:
+                                            kecValue['Kecamatan Mutiara'] ?? 0,
+                                        mutiaraTimur: kecValue[
+                                                'Kecamatan Mutiara Timur'] ??
+                                            0,
+                                        padangTiji:
+                                            kecValue['Kecamatan Padang Tiji'] ??
+                                                0,
+                                        peukanBaro:
+                                            kecValue['Kecamatan Peukan Baro'] ??
+                                                0,
+                                        pidie: kecValue['Kecamatan Pidie'] ?? 0,
+                                        sakti: kecValue['Kecamatan Sakti'] ?? 0,
+                                        simpangTiga: kecValue[
+                                                'Kecamatan Simpang Tiga'] ??
+                                            0,
+                                        tangse:
+                                            kecValue['Kecamatan Tangse'] ?? 0,
+                                        tiro: kecValue['Kecamatan Tiro'] ?? 0,
+                                        titeue:
+                                            kecValue['Kecamatan Titeue'] ?? 0,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                              Tabel tabel = Tabel(items: dataTabel);
+
+                              setState(() {
+                                isLoading = true;
+                              });
+
+                              final pdfFile = await PdfApi.generateFile(tabel);
+                              setState(() {
+                                isLoading = false;
+                              });
+                              PdfApi.openFile(pdfFile);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ]
-            : [
-                searchBox(context),
-                Card(
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
+                ]
+              : [
+                  searchBox(context),
+                  Card(
+                    elevation: 4,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    margin: EdgeInsets.all(15),
+                    child: BuildChart(
+                      currentKecamatan: currentKecamatan,
+                    ),
                   ),
-                  margin: EdgeInsets.all(15),
-                  child: BuildChart(
-                    currentKecamatan: currentKecamatan,
-                  ),
-                ),
-                buildCarosel(),
-              ],
+                  buildCarosel(),
+                ],
+        ),
       ),
     );
   }

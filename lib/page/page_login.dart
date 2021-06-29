@@ -84,6 +84,7 @@ class _PageLoginState extends State<PageLogin> {
                         ),
                         controller: contorllerEmail,
                         style: TextStyle(color: primarycolor),
+                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(20),
                           hintText: "Masukkan Email Anda",
@@ -107,6 +108,7 @@ class _PageLoginState extends State<PageLogin> {
                         ),
                         controller: controllerPassword,
                         style: TextStyle(color: primarycolor),
+                        obscureText: true,
                         decoration: InputDecoration(
                           contentPadding: EdgeInsets.all(20),
                           hintText: "Masukkan Password Anda",
