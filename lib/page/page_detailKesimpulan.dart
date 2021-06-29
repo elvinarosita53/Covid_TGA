@@ -56,48 +56,48 @@ class PageDetailKesimpulan extends StatelessWidget {
               judulTextKesimpulan: "Usia Yang Rentan Meninggal:",
               kesimpulanKasus: 'Usia $maxusiaMeninggal Tahun',
             ),
-            CardKesimpulan(
-              kesimpulanKasus: "${rataRata['positif'].toStringAsFixed(2)} ",
-              judulTextKesimpulan: 'Rata-Rata Positif Perbulan:',
-            ),
-            CardKesimpulan(
-              kesimpulanKasus: "${rataRata['sembuh'].toStringAsFixed(2)} ",
-              judulTextKesimpulan: ' Rata-Rata Sembuh Perbulan:',
-            ),
-            CardKesimpulan(
-              kesimpulanKasus: "${rataRata['meninggal'].toStringAsFixed(2)} ",
-              judulTextKesimpulan: 'Rata-Rata Meninggal Perbulan:',
-            ),
-            CardKesimpulan(
-              kesimpulanKasus: "${rataRata['dirawat'].toStringAsFixed(2)} ",
-              judulTextKesimpulan: 'Rata-Rata Dirawat Perbulan:',
-            ),
-            CardKesimpulan(
-              kesimpulanKasus: "${rataRata['tersuspek'].toStringAsFixed(2)} ",
-              judulTextKesimpulan: 'Rata-Rata Tersuspek Perbulan:',
-            ),
-            CardKesimpulan(
-              kesimpulanKasus: "${varianKasus['positif'].toStringAsFixed(2)} ",
-              judulTextKesimpulan: 'Varian Positif Perbulan:',
-            ),
-            CardKesimpulan(
-              kesimpulanKasus: "${varianKasus['sembuh'].toStringAsFixed(2)} ",
-              judulTextKesimpulan: 'Varian Sembuh Perbulan:',
-            ),
-            CardKesimpulan(
-              kesimpulanKasus:
-                  "${varianKasus['meninggal'].toStringAsFixed(2)} ",
-              judulTextKesimpulan: 'Varian Meninggal Perbulan:',
-            ),
-            CardKesimpulan(
-              kesimpulanKasus: "${varianKasus['dirawat'].toStringAsFixed(2)} ",
-              judulTextKesimpulan: 'Varian Dirawat Perbulan:',
-            ),
-            CardKesimpulan(
-              kesimpulanKasus:
-                  "${varianKasus['tersuspek'].toStringAsFixed(2)} ",
-              judulTextKesimpulan: 'Varian Tersuspek Perbulan:',
-            ),
+            // CardKesimpulan(
+            //   kesimpulanKasus: "${rataRata['positif'].toStringAsFixed(2)} ",
+            //   judulTextKesimpulan: 'Rata-Rata Positif Perbulan:',
+            // ),
+            // CardKesimpulan(
+            //   kesimpulanKasus: "${rataRata['sembuh'].toStringAsFixed(2)} ",
+            //   judulTextKesimpulan: ' Rata-Rata Sembuh Perbulan:',
+            // ),
+            // CardKesimpulan(
+            //   kesimpulanKasus: "${rataRata['meninggal'].toStringAsFixed(2)} ",
+            //   judulTextKesimpulan: 'Rata-Rata Meninggal Perbulan:',
+            // ),
+            // CardKesimpulan(
+            //   kesimpulanKasus: "${rataRata['dirawat'].toStringAsFixed(2)} ",
+            //   judulTextKesimpulan: 'Rata-Rata Dirawat Perbulan:',
+            // ),
+            // CardKesimpulan(
+            //   kesimpulanKasus: "${rataRata['tersuspek'].toStringAsFixed(2)} ",
+            //   judulTextKesimpulan: 'Rata-Rata Tersuspek Perbulan:',
+            // ),
+            // CardKesimpulan(
+            //   kesimpulanKasus: "${varianKasus['positif'].toStringAsFixed(2)} ",
+            //   judulTextKesimpulan: 'Varian Positif Perbulan:',
+            // ),
+            // CardKesimpulan(
+            //   kesimpulanKasus: "${varianKasus['sembuh'].toStringAsFixed(2)} ",
+            //   judulTextKesimpulan: 'Varian Sembuh Perbulan:',
+            // ),
+            // CardKesimpulan(
+            //   kesimpulanKasus:
+            //       "${varianKasus['meninggal'].toStringAsFixed(2)} ",
+            //   judulTextKesimpulan: 'Varian Meninggal Perbulan:',
+            // ),
+            // CardKesimpulan(
+            //   kesimpulanKasus: "${varianKasus['dirawat'].toStringAsFixed(2)} ",
+            //   judulTextKesimpulan: 'Varian Dirawat Perbulan:',
+            // ),
+            // CardKesimpulan(
+            //   kesimpulanKasus:
+            //       "${varianKasus['tersuspek'].toStringAsFixed(2)} ",
+            //   judulTextKesimpulan: 'Varian Tersuspek Perbulan:',
+            // ),
           ],
         ),
       ),

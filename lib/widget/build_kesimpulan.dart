@@ -461,32 +461,32 @@ class BuildKesimpulan extends StatelessWidget {
                             judulTextKesimpulan: "Usia Yang Rentan Meninggal:",
                             kesimpulanKasus: 'Usia $maxusiaMeninggal Tahun',
                           ),
-                          IconButton(
-                            padding: EdgeInsets.all(0),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => PageDetailKesimpulan(
-                                    maxKecamatanMeninggal:
-                                        maxKecamatanMeninggal,
-                                    maxMeninggal: maxMeninggal,
-                                    maxKecamatanPositif: maxKecamatanPositif,
-                                    maxPositif: maxPositif,
-                                    maxUsiaPositif: maxUsiaPositif,
-                                    maxusiaMeninggal: maxusiaMeninggal,
-                                    rataRata: rataRata,
-                                    varianKasus: varianKasus,
-                                  ),
-                                ),
-                              );
-                            },
-                            icon: Icon(
-                              Icons.expand_more,
-                              color: primarycolor,
-                            ),
-                            iconSize: 30,
-                          )
+                          // IconButton(
+                          //   padding: EdgeInsets.all(0),
+                          //   onPressed: () {
+                          //     Navigator.push(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //         builder: (context) => PageDetailKesimpulan(
+                          //           maxKecamatanMeninggal:
+                          //               maxKecamatanMeninggal,
+                          //           maxMeninggal: maxMeninggal,
+                          //           maxKecamatanPositif: maxKecamatanPositif,
+                          //           maxPositif: maxPositif,
+                          //           maxUsiaPositif: maxUsiaPositif,
+                          //           maxusiaMeninggal: maxusiaMeninggal,
+                          //           rataRata: rataRata,
+                          //           varianKasus: varianKasus,
+                          //         ),
+                          //       ),
+                          //     );
+                          //   },
+                          //   icon: Icon(
+                          //     Icons.expand_more,
+                          //     color: primarycolor,
+                          //   ),
+                          //   iconSize: 30,
+                          // )
                         ],
                       ),
                     );

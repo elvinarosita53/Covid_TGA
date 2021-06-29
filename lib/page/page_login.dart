@@ -184,6 +184,9 @@ class _PageLoginState extends State<PageLogin> {
                                   backgroundColor: Colors.red[300],
                                 );
                               }
+                              setState(() {
+                                isLoading = false;
+                              });
                             }
                           }
                         },
